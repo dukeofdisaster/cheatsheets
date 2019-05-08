@@ -1,0 +1,46 @@
+# various netcat need to knows..
+# In general, windows bits refer to those executed in CMD as there are different
+# behaviors between poweershell (PS) and CMD
+
+# 1 - start netcat with No dns lookups, listening, verbosely, on port 1234
+$ nc -nlvp 1234
+C:\> nc -nlvp 1234
+  -n : no dns lookup
+  -l : listen
+  -v : verbose mode
+  -p : we're going to specify a port
+
+# 2 - connect to a specific address on a specific port 
+$ nc 127.0.0.1 1234
+C:\> nc 127.0.0.1 123
+
+# 3 - Pipe data to a specific address on a specific port
+$ echo "HELLO WORLD" | nc 127.0.0.1 1234
+C:\> echo HELLO WORLD | nc 127.0.0.1 1234
+
+# 3a - Output on listener from step 1
+user@computerA:~$ nc -nlvp 1234
+Listening on [0.0.0.0] (family 0, port 1234)
+Connection from 127.0.0.1 43060 received!
+HELLO WORLD
+
+# 3b - Note, from the computer that sent the piped data, they will not be able
+      to send additonal data, on the connection, since the only data sent is what
+      was read on the pipe, however, they will be able to receive data. Ex. 
+
+=== LISTENER ====
+user@computerA:~$ nc -nlvp 1234
+Listening on [0.0.0.0] (family 0, port 1234)
+Connection from 127.0.0.1 43060 received!
+HELLO
+
+helloo              |
+can you hear me     |<------ Typed text gets received on nB
+
+=== SENDER ====
+user@computerB:~$ echo HELLO | nc 127.0.0.1 1234
+TESTING 123   <------ TYPED TEXT WASN"T RECEIVED ON A
+
+helloo              |
+can you hear me     |
+

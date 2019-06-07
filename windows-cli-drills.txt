@@ -21,3 +21,10 @@ MY-PC   localhost       127.0.0.1        ::1                                    
 MY-PC   localhost       127.0.0.1        ::1                                      32       0
 MY-PC   lt-otherpc      10.0.34.60                                                32       0
 MY-PC   lt-otherpc      10.0.34.60                                                32       0
+
+# verify whether or not a user account has been disabled
+PS C:\> Get-ADUser john.doe | select SamAccountName,Enabled
+
+SamAccountName Enabled
+-------------- -------
+john.doe        False

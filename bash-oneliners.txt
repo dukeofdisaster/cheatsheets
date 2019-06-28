@@ -1,0 +1,29 @@
+# ping sweep 
+for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done
+
+# same, saved to file
+for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done > hosts.txt
+
+# grep out hosts from same file; example
+mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}'
+172.16.1.5:
+172.16.1.15:
+172.16.1.22:
+172.16.1.23:
+172.16.1.24:
+172.16.1.26:
+172.16.1.30:
+172.16.1.36:
+172.16.1.101:
+
+mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}' | tr -d ':'
+172.16.1.5
+172.16.1.15
+172.16.1.22
+172.16.1.23
+172.16.1.24
+172.16.1.26
+172.16.1.30
+172.16.1.36
+172.16.1.101
+

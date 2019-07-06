@@ -1,0 +1,11 @@
+# I kinda still don't understand why this term is used; i used to think it was
+# some magical super cyber term but in reality it just basicially means moving
+# from one computer to another. The important thing here are proxies and tunnels.
+# once you pwn a "beachhead" box and get inside the network, you abuse this access
+# to get to other machines. Enter ssh tunnels... or more easily, sshuttle.
+#
+# if i've gained root access on nix01 and stolen a priv key and the internal network is on subnet 172.16.1.0/24
+# i can use the following sshuttle command to setup what amounts to a VPN connection to the
+# internal network. 
+# NOTE: sshuttle has a known issue with inability to nmap over this connection
+sshuttle -r root@nix01 172.16.1.0/24 --ssh-cmd 'ssh -i root_id.priv'

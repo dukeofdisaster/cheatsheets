@@ -1,0 +1,8 @@
+# jq is an extremely helpful tool for manipulatingn json but it can be a bitch to learn.
+# hopefully this helps
+
+# grab only the value of field '_id' from a narray of json object
+# - pipes the json objects to jq, then you select the array of objects '.[]'
+#  and the field '_id' for those objects; dumps a list of the id object
+user@box:~$ cat savedsearches.json | jq '.[]._id'
+

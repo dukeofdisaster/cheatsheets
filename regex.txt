@@ -22,4 +22,3 @@ sid:2805913
 # sed is saying: take any line that starts with "0" followed by any ".*" chars and delete "/<rules here>/d"
 user@box:~$ cat badlist.txt | sed "/^0.*/d"
 
->>>>>>> 6a344477de963b2309cf6a2d3c8be9fa9870be9d

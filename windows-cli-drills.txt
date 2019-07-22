@@ -28,3 +28,15 @@ PS C:\> Get-ADUser john.doe | select SamAccountName,Enabled
 SamAccountName Enabled
 -------------- -------
 john.doe        False
+
+
+# test if a port is open in powershell
+PS Z:\> Test-NetConnection -port 443 somehostname
+
+
+ComputerName     : somehostname
+RemoteAddress    : 10.13.37.10
+RemotePort       : 443
+InterfaceAlias   : Ethernet
+SourceAddress    : 10.0.34.144
+TcpTestSucceeded : True

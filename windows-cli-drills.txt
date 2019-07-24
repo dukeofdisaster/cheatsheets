@@ -40,3 +40,7 @@ RemotePort       : 443
 InterfaceAlias   : Ethernet
 SourceAddress    : 10.0.34.144
 TcpTestSucceeded : True
+
+# get current date
+CMD\> date /T
+Wed 07/24/2019

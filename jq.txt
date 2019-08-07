@@ -6,3 +6,6 @@
 #  and the field '_id' for those objects; dumps a list of the id object
 user@box:~$ cat savedsearches.json | jq '.[]._id'
 
+# cybereason; taking query results and filtering down to individual results
+# from piping the output to jq
+jq '.data.resultIdToElementDataMap[] | .guidString'

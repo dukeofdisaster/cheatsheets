@@ -42,5 +42,19 @@ SourceAddress    : 10.0.34.144
 TcpTestSucceeded : True
 
 # get current date
-CMD\> date /T
+CMD> date /T
 Wed 07/24/2019
+
+# list started services
+CMD> net start
+
+# search the list of started services for a given string
+CMD> net start | findstr /i caseInsensitiveString
+
+# stop a service
+CMD> net start SomeServiceNameHere
+
+# start a service
+CMD> net start some SomeServiceNameHere
+
+# same in powershell

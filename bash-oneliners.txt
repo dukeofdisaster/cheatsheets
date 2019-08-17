@@ -4,6 +4,12 @@ for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done
 # same, saved to file
 for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done > hosts.txt
 
+# same only ip's printed
+for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from' | awk -F " " '{print $4}'; done
+
+# parallel port scan with parallel, timeout, and nc
+parallel "timeout 0.2 nc -z -v 192.168.0.105 {} 2>&1 | grep open" ::: {1..65535}
+
 # grep out hosts from same file; example
 mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}'
 172.16.1.5:
@@ -26,4 +32,5 @@ mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}' | tr -d ':'
 172.16.1.30
 172.16.1.36
 172.16.1.101
+
 

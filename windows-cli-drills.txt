@@ -57,4 +57,14 @@ CMD> net start SomeServiceNameHere
 # start a service
 CMD> net start some SomeServiceNameHere
 
-# same in powershell
+# list tasks
+CMD> tasklist
+
+# list tasks and find by name, case insensitive
+CMD> tasklist | findstr /i calc
+
+# kill a task by pid
+CMD> taskkill /F /PID 5555
+
+# kill tasks by name; will kill mulitple pids of same task
+cmd> taskkill /F /IM calc.exe

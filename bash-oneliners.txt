@@ -27,3 +27,6 @@ mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}' | tr -d ':'
 172.16.1.36
 172.16.1.101
 
+
+# locate nmap scripts and only print out their names
+user@user:~/ locate smb-enum | awk -F "/" '{print $5}'

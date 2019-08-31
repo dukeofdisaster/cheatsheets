@@ -1,0 +1,2 @@
+# various means of portforwarding to help us out
+ssh -L 5601:localhost:5601 security@haystack.htb

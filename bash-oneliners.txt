@@ -1,3 +1,6 @@
+# recursively download a directory with wget
+wget --no-parent -r http://www.someplace.com/somedir/
+
 # ping sweep 
 for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done
 

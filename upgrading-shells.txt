@@ -1,0 +1,11 @@
+# socat listeners often work better than nc, but socat is a bitch because 
+# it doesn't exit cleanly and you have to kill the socat pid, which can still remain bound
+socat file:`tty`,raw,echo=0 tcp-listen:1337
+
+# upgrading a netcat listner - solid way; ippsec approved
+- nc -nvlp 1337
+- CTRL-Z
+  - this backgrounds the the process once you've received the connect back
+- stty raw -echo
+- fg
+  - foregrounds the shell

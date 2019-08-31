@@ -37,8 +37,8 @@ mark@NIX01:/tmp$ cat hosts.txt | awk -F " " '{print $4}' | tr -d ':'
 172.16.1.101
 
 
-<<<<<<< HEAD
 # locate nmap scripts and only print out their names
 user@user:~/ locate smb-enum | awk -F "/" '{print $5}'
-=======
->>>>>>> 1db3f671a80f6347cb6c49e14536f413586249c7
+
+# curl with spoofed user aget 
+curl -A "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"

@@ -1,0 +1,15 @@
+# replace whitespace with newline
+# - this should put in a special char ^M when you hit control-v+ENTER
+:%s/ /CTRL-V ENTER/g
+
+# trouble pasting??? try set paste
+:set paste
+
+# turn on line numbers
+:set number
+
+# turn off numbers (when you have numbers by default but need to paste and
+# don't want numbers
+:set number!
+
+

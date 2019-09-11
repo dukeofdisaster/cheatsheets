@@ -1,0 +1,14 @@
+# some simple bash functions
+
+Scramble function
+================
+#!/bin/bash
+function scramble {
+  local toScram=$1
+  #echo $toScram
+  echo $toScram | rev | base64 -w 0 | rev | base64 -w 0 | rev | base64 -w 0 ; echo
+}
+scramble $1
+
+================
+  Usage: ./scramble.sh SOMESTRINGTOSCRAMBLEHERE

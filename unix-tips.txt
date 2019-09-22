@@ -1,0 +1,6 @@
+# dont forget...
+Anything in /var/log ?
+
+Can you read /var/mail? remember: incidents are often reported by mail
+
+You found open ports initially... got on the box... now stuck... what directories/files are relevant to those ports?

@@ -1,0 +1,12 @@
+# some wfuzz tips
+#
+# these are generally the shit you'll want to remember; or at least this is what i  tend to forget
+--hc/hl/hw/hh N[,N]+
+              Hide responses with the specified code/lines/words/chars (Use BBB for taking values from baseline)
+
+# sample 
+# fuzzes the url and hides status code 404
+wfuzz -c -z,somewordlistpathhere --hc 404 http://someurlhere.com/shell.php?FUZZ=ls
+
+# fuzz and hide empty responses or where char count = 0
+wfuzz -c -z,somewordlistpathhere --hh 0 http://someurlhere.com/shell.php?FUZZ=ls

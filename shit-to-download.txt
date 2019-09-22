@@ -1,0 +1,3 @@
+# a list of utilities that aren't default in kali but should be included
+dirsearch.py
+https://github.com/danielmiessler/SecLists.git

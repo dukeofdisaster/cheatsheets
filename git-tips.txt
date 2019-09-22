@@ -1,0 +1,14 @@
+# create empty repo in the remote you want to push to
+mkdir myalternate_repo
+cd myalternate_repo
+git init
+
+# add an alternative remote to push to
+git remote add alt user@server:/path/to/git/repo.git
+
+# remove an alternative 
+git remote rm alt
+
+# push to alt 
+git push alt
+

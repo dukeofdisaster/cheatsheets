@@ -1,0 +1,10 @@
+# useful shit for your python scripts
+
+# a good basic logging config
+import logging
+logging.basicConfig(filename='/var/log/mysweetassscript.log',
+                    level=logging.INFO, 
+                    filemode='a+',
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+

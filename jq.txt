@@ -9,3 +9,21 @@ user@box:~$ cat savedsearches.json | jq '.[]._id'
 # cybereason; taking query results and filtering down to individual results
 # from piping the output to jq
 jq '.data.resultIdToElementDataMap[] | .guidString'
+
+
+# select an outer key with the given value
+[root@box ~]# cat /opt/intel/badips.json | jq '.["68.183.156.156"]'
+1569377667
+
+# object of badips.json has the following structure
+{
+  "68.183.156.156": 1569377667,
+  "69.10.54.134": 1569377667,
+  "86.247.170.128": 1569377667,
+  "91.236.116.89": 1569377667,
+  "92.222.69.186": 1569377667,
+  "51.254.199.97": 1569456757,
+  "51.38.124.174": 1569456757,
+  "51.75.202.12": 1569456757
+}
+

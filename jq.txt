@@ -100,3 +100,6 @@ Command output
   "flow.start": "2019-09-26T01:29:46.888694+0000"
 }
 
+# selecting multiple fields from an array of json
+# - note: this will only display the values, not the keys
+cat my-json-linefile.txt | jq '.somefieldhere,someotherfieldhere,field3,field4'

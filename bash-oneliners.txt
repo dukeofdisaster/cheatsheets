@@ -48,3 +48,13 @@ curl -A "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) Apple
 
 # get a list of all unix commands available on your system... may vary
 ls -l /usr/bin/ | awk -F " " '{print $9}'
+
+# bash net redirection
+# the below command will act essentially as a curl
+exec 3<> /dev/tcp/www.google.com/80
+echo -e "GET /" >&3
+cat <&3
+
+# simple bash port scan ; echo the open port to th screen
+# note this isn't infallible; this fails on an open ssh port for some reason
+for i in {1..65535}; do (echo "" > /dev/tcp/192.168.0.5/$i && echo $i)  2>/dev/null; done

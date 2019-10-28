@@ -1,8 +1,269 @@
 # starting creds
 Username              Password
----------                   ---------
-century1                 century1
-cyborg1                  cyborg1
-groot1                     groot1
-oracle1                    oracle1
-trebek1                   trebek1
+---------             ---------
+century1              century1
+cyborg1               cyborg1
+groot1                groot1
+oracle1               oracle1
+trebek1               trebek1
+
+# logging into century 1
+c1 -> c2 : Get the powershell build number
+
+## two wrong ways 1 right ; technically this is incorrect
+We may think we need the ps version number, like below
+
+PS C:\Users\century1\documents> get-host | select-object version
+
+Version
+-------
+5.1.14393.3053
+
+
+PS C:\Users\century1\documents> get-host
+
+
+Name             : ConsoleHost
+Version          : 5.1.14393.3053
+InstanceId       : f843d73b-5c01-4008-84e4-225b02afadc0
+UI               : System.Management.Automation.Internal.Host.InternalHostUserInterface
+CurrentCulture   : en-US
+CurrentUICulture : en-US
+PrivateData      : Microsoft.PowerShell.ConsoleHost+ConsoleColorProxy
+DebuggerEnabled  : True
+IsRunspacePushed : False
+Runspace         : System.Management.Automation.Runspaces.LocalRunspace
+
+
+but what we need is BUildVersion from  the below
+
+PS C:\Users\century1\documents> $PSVersiontable
+
+Name                           Value
+----                           -----
+PSVersion                      5.1.14393.3053
+PSEdition                      Desktop
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0...}
+BuildVersion                   10.0.14393.3053
+CLRVersion                     4.0.30319.42000
+WSManStackVersion              3.0
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+
+## Password
+10.0.14393.3053
+
+# Century 2 -> 3
+The password is the name of built-in cmdlet that performs a wget like
+function in powershell, plus name of file on the desktop
+
+## name of the file on desktop...
+PS C:\Users\century2\Desktop> dir                                                                        
+                                                                                                         
+                                                                                                         
+    Directory: C:\Users\century2\Desktop                                                                 
+                                                                                                         
+                                                                                                         
+Mode                LastWriteTime         Length Name                                                    
+----                -------------         ------ ----                                                    
+-a----        8/30/2018   3:29 AM            693 443     
+
+## Password
+invoke-webrequest443
+
+# century 3 -> 4
+Password is the number of files on the desktop
+
+## Measure-Object
+Welcome to measure-object; this lets us measure the output of a previous command
+
+PS C:\Users\century3\documents> dir C:\Users\century3\Desktop | measure-object
+
+
+Count    : 123
+Average  :
+Sum      :
+Maximum  :
+Minimum  :
+Property :
+
+Password : 123
+
+# century 4 -> 5
+Password is the name of the file in a directory on the desktop that has spaces in it
+
+## Spaces ? say hello to quotes
+
+PS C:\Users\century4\documents> dir "c:\users\century4\Desktop\Can You Open Me"
+
+
+    Directory: C:\users\century4\Desktop\Can You Open Me
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+-a----        8/30/2018   3:29 AM             24 61580
+
+Password: 61580
+
+# century 5 -> 6
+The passwordi is the short name of the domain in which the system resides plus
+the name of the file on the desktop
+
+this is confusing
+## This name is short, but not the one
+PS C:\Users\century5\documents> hostname
+utw
+
+## whoami shows box\user (underthewire is the short name)
+PS C:\Users\century5\documents> whoami
+underthewire\century5
+
+## fqdn of the host 
+PS C:\Users\century5\documents> [System.Net.Dns]::GetHostByName($env:computerName).HostName
+utw.underthewire.tech
+
+## file on the desktop
+PS C:\Users\century5\Desktop> cat 3347
+Don't forget to get the Short Domain name in lowercase
+
+So password : underthewire3347
+
+
+# century 6 -> 7 
+Passowrd is number of folders on desktop
+
+## easy case for dir
+
+This could have tripped us up if there were actual files there, but 
+they were all dirs
+
+PS C:\Users\century6> dir .\Desktop | Measure-Object
+
+
+Count    : 197
+Average  :
+Sum      :
+Maximum  :
+Minimum  :
+Property :
+
+Password : 197
+
+# century 7 -> 8
+Password is in a readme file on the desktop
+
+## find the file first
+PS C:\Users\century7\documents> Get-ChildItem -recurse C:\Users\century7 | findstr -i readme
+-a----        8/30/2018   3:29 AM              7 Readme.txt
+
+## Good but that's text, we need objects
+PS C:\Users\century7\documents> Get-ChildItem -recurse C:\Users\century7 | where {$_.Name -like "readme*"
+} | get-content
+7points
+
+password : 7points
+
+# cnetury 8 -> 9
+ The password for Century9 is the number of unique entries within the file on the desktop.
+
+## Hmmm
+Wasn't too sure how to go about this... in linux you'd end up doing something like cat | sort | uniq
+but not sure there's a direct translation in powershell. We are able to do cat | sort-object
+
+## I think this is the solution
+```
+PS C:\Users\century8\Desktop> cat .\unique.txt | Sort-Object | get-unique | Measure-Object
+
+
+Count    : 696
+Average  :
+Sum      :
+Maximum  :
+Minimum  :
+Property :
+```
+## Bingo, that was it
+password: 696
+
+# century 9 -> 10
+The password for Century10 is the 161st word within the file on the desktop.o
+
+## Get an index!
+This is interesting; since powershell returns objects, the output of it's various commands act
+as such. In this case, when using get-content on a file we can pipe the object to select to
+choose an index of that object.. makes sense; a file is an array of lines, a line could
+be an array of words/chars etc etc.
+
+## Trickery
+The file content is all on one line, how do we split it or extract a word in that line??
+```
+PS C:\Users\century9\Desktop> Get-Content .\Word_File.txt | measure-object
+
+
+Count    : 1
+Average  :
+Sum      :
+Maximum  :
+Minimum  :
+Property :
+
+PS C:\Users\century9\Desktop> Get-Content .\Word_File.txt | select -index 0
+larceny epibole ampliate trecentos psychotoxic sybarism shatterwit cartilaginification crenulation splenification freespac untragicalne
+ss renovater smirch historism tymbal nonobjectivist protestive octobass crownal retrorenal activation ascocarp clawing unaccordingly st
+rontianite refutatory reline unsubmersible unstuffy asynergia asha rejunction spiritrompe preestimates papabot postcoital forbearantly
+epistolize corkwood rasers logicized rearrange rectigraph signposts prothrombin headkerchief upholden oversocialize semiperimeter hackb
+uteer ticklish brachiated atheneum naegait engrasp palaeoconcha deminudity tragions curteous stratal swandown succinylcholine swooners
+caskanet irrespectability flocculant palatefulness thalamocoele maleate tittivate eustachium etudes loppering fidos flayers murrion uni
+nduced numbedness nincompoopish compressors cassoulet protura fagopyrismus sesquibasic paxwaxes grievous remonstrator fulvid rotatoria
+ultraconservatives postcards hairdresser wagnerianism mistreats nefarious
+```
+
+## finally
+WE get the line we want, in this case index0 , and enclose that object ( as tring) and split that object by whitespace;
+this returns an array of strings that will dump to the string on newlines; we can then pipe that object
+to select again and get the word we need to get; in this case, index 160 to get the 161st item/word
+```
+PS C:\Users\century9\Desktop> (Get-Content .\Word_File.txt | select -Index  0) -split ' ' | select -index 160
+pierid
+```
+
+# Century 10 -> 11
+The password for Century11 is the 10th and 8th word of the Windows Update service 
+description combined PLUS the name of the file on the desktop.
+
+## What the actual hell...
+Hmm so this is probably going to entail Get-Service, but a default listing only shows displayname
+```
+S C:\Users\century10\documents> get-service
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  ADWS               Active Directory Web Services
+Stopped  AJRouter           AllJoyn Router Service
+
+S C:\Users\century10\documents> get-service
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  ADWS               Active Directory Web Services
+Stopped  AJRouter           AllJoyn Router Service
+```
+
+
+## No description?
+Apprently there's no description variable in the object returned from get-service; 
+```
+Link: https://tahirhassan.blogspot.com/2017/03/powershell-get-services-description.html
+```
+
+But there's also a way around this apparently
+```
+& {
+    $svc = [System.Management.ManagementObject]::new("Win32_Service.Name='XboxNetApiSvc'")
+    $svc["Description"];
+    $svc.Dispose();
+}
+```
+
+

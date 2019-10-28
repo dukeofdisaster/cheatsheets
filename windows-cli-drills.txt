@@ -68,3 +68,18 @@ CMD> taskkill /F /PID 5555
 
 # kill tasks by name; will kill mulitple pids of same task
 cmd> taskkill /F /IM calc.exe
+
+# Sort processes by cpu usage
+# sort-object sorts ascending by default
+PS>  get-process | sor-object -property cpu -descending
+
+# display last 10 commands in a dialogue box in terminal
+PS> F7
+
+# from the above, displays a dialogue box in which you can enter one of the
+# 10 zero-indexed command numbers previously displayed
+PS> F9
+
+# Power shell can do hex math
+PS C:\Users\IEUser> 0xdead + 0xbeef
+105884

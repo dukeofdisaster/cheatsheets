@@ -9,3 +9,18 @@ socat file:`tty`,raw,echo=0 tcp-listen:1337
 - stty raw -echo
 - fg
   - foregrounds the shell
+
+
+# Upgrading shell on target
+python -c "import pty; pty.spawn('/bin/bash')"
+CTRL-Z
+stty raw -echo
+fg
+reset
+
+# if height/width is fucked go to your attacker machine
+# and run this in a seperate shhell
+stty size
+
+# Then you can run the command to set the size in shell ontarget
+stty -rows 50 -columns 100

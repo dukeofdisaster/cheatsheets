@@ -103,3 +103,8 @@ Command output
 # selecting multiple fields from an array of json
 # - note: this will only display the values, not the keys
 cat my-json-linefile.txt | jq '.somefieldhere,someotherfieldhere,field3,field4'
+
+## pulling indicators out of OTX responses; works on multi-line json
+rooto@box:~/ cat 10-feeds.json | jq -r '.results[] | .indicators[] | .indicator'
+
+

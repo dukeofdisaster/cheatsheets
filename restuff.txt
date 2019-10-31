@@ -121,4 +121,22 @@ user@box:~/Downloads$ hexdump -C test
 00000010  0a                                                |.|
 00000011
 
+3.5 Basic Windows Ring3 Internal Structures
+- Looking at "userland" (RING3) Structures.
+-THREAD_ENVIRONMENT_BLOCK (TEB)
+  - address of top/bottom of current thread stack
+  - thread ID 
+  - ID of process thread belongns too
+  - Error code of most recent error during thread exec.
+  - Addr of Thread Local Storage (TLS)
+  - Addr of PROCESS_ENVIRONMENTN_BLOCK (PEB)
 
+-PEB
+  - Image of the base process
+  - PEB_LDR_DATA : Addr of the loader data structure; has pointers to lists
+    regarding nthe modules loaded by the process
+  - NtGlobalFlag value
+  - Major/Minor versions of the Windows OS
+  - Num of procoessors available
+  - BeingDebugged flag
+  - obvs: some info can be used for debugger detection(NtGlobalFlag & BeingDebugged)

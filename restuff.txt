@@ -140,3 +140,101 @@ user@box:~/Downloads$ hexdump -C test
   - Num of procoessors available
   - BeingDebugged flag
   - obvs: some info can be used for debugger detection(NtGlobalFlag & BeingDebugged)
+
+- CONTEXT structure
+  - used by system to track alll neces. CPU state info for a given thread
+    under execution during internal ops.
+  - Stores values of REGs needed to continue execution of the thread from the
+    right virt address in case an event (e.g. hw/sw exception) occurs.
+
+3.6 - Windws APIs 
+  - == Ring3 OS functions.. 
+  - COMM. PATH from the app to the OS.
+  - Functional Categories
+    1. Administration andn MGMT
+    2. Diagnostics 
+    3. Graphiics and Multimedia
+    4. System Services
+    5. Windows User Interface
+
+3.7 Types of Reversing tools
+  - hexeditor
+  - decompiler
+  - Disassembler
+  - Debuggers: User or Kernel???
+    - Ring0 (kernel mode)  or Ring3 (user mode)
+    - Anti-Reversing (AR)
+    - Kernel mode debuggers are more powerful since they aren't seen by most
+      anti-reversing efforts. i.e. If i try to detect debugging reversing with
+      a Ring3 api, i'm likely to miss debugging/reversing at ring0
+    - Ring3 debuggers are easily deteted by AR but this is an advantage in
+      that it allows RE's to study the AR techniques and learn about OS.
+    - Ring3 debuggers are used most of the time, and are USER FRIENDLY
+  - System Monitoring Tools
+    - sysmon
+  - Windows API Monitoring tools
+    - hook APIs used by the process being monitored
+
+4. - Virtual Addresses / Relative Virtual Addresses / Offsets / PE Format
+4.2 - VA/RVA/Offset
+  - CRITICAL to undnerstand how these are interconnected and how to use 1 to
+    calculate the other.
+  - Apps DO NOT directly access phys. mem, only virtual mem. Mem addresses 
+    referenced by an app are VAs.
+  - This allows an app to occupy dynamic locations of physical memory; i.e.
+    it doesn't have to be all in one continous spot.
+  - RVA == difference between two VA's nand refers to the highest one.
+  - EXAMPLE
+    - VA_1 = 0x00400000
+    - VA_2 = 0x00401000
+    - RVA of VA_2 = VA_2 -VA_1 = 0x000001000
+  - Offsets
+    - when discussing offsets we USU. refer to physical memory, a phys. file on
+      disk, or where we treat data s raw data
+    - OFFSET == The distance between two bytes, for example, inside a file,
+      usually starting at the beginning ofo a file.
+
+4.2.1 - WHY?
+  - Patching at runtime is only temporary (e.g. to disable an AR triick)
+  - Being able to calculate offset of a given byte in the file with VA/RVA 
+    can allow us to patch it permanently.
+
+
+4.3 PE Format
+  - MS-DOS HEader
+    - at start of every PE.
+    - First bytes are traditional MS-DOS Header; IMAGE_DOS_HEADER; two values
+      - e_magic: a WORD (16-bit) value == 0x5A4D == MZ in ascii == IMAGE_DOSO_SIGNATURE
+      - e_lfanew : at offset 3ch; contnaiins file offset of the start of the PE header.
+        AKA IMAGE_NT_HEADERS structure. 
+
+  - IMAGE_NT_HEADERS Structure (PE header)
+    - a struct of structures
+    - typedef struct _IMAGE_NT_HEADERS {
+        DWORD                     Signature;
+        IMAGE_FILE_HEADER         FileHeader; 
+        IMAGE_OPTIONAL_HEADER     OptionalHeader;
+        IMAGE_NT_HEADERS;         *PIMAGE_NT_HEADERS;
+      }
+    - Signature is 50450000h ("PE\0\0" in ASCII)
+
+  - IMAGE_FILE_HEADER Structure
+    - contains info about executable characteristics: ARCH, number of sections,
+      e.g. .text, .data. 
+    - Contains member var with size value of IMAGE_OPTIONAL_HEADER called
+      SizeOfOptionalHeader (value most be set to E0h/0xE0)
+      - IMAGE_OPTIONAL_HEADER is requred for every structure even tho it's "optional"
+    - Characterstics var defines stuff like type of exe i.e .exe or .dll
+    - typedef struct _IMAGE_NT_HEADERS {
+        WORD    Machine;
+        WORD    NumberOfSections;
+        DWORD   TimeDateStamp;
+        DWORD   PointerToSymbolTable;
+        DWORD   NumberOfSymbols;
+        WORD    SizeOfOptionalHeader;
+        WORD    Characteristics;
+      } IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
+      
+  - IMAGE_OPTIONAL_HEADER
+    - Recall this is NOT OPTIONAL
+

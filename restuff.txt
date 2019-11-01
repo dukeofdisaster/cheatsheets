@@ -237,4 +237,48 @@ user@box:~/Downloads$ hexdump -C test
       
   - IMAGE_OPTIONAL_HEADER
     - Recall this is NOT OPTIONAL
+    - typedef struct _IMAGE_OPTIONAL_HEADER {
+        WORD                  Magic;
+        BYTE                  MajorLinkerVersion;
+        BYTE                  MinoorLinkerVersion;
+        DWORD                 SizeOfCode;
+        DWORD                 SizeOfInitializedData;
+        DWORD                 SizeOfUninitializedData;
+        DWORD                 AddressOfEntryPoint;
+        DWORD                 BaseOfCode; 
+        DWORD                 BaseOfData;
+        DWORD                 ImageBase;
+        DWORD                 SectionAlignment;
+        DWORD                 FileAlignment;
+        WORD                  MajorOperatingSystemVersion;
+        WORD                  MinorOperatingSystemVersion;
+        WORD                  MajorImageVersion;
+        WORD                  MinorImageVersion;
+        WORD                  MajorSubsystemVersion;
+        WORD                  MinorSubsystemVersion;
+        DWORD                 Win32VersionValue;
+        DWORD                 SizeOfIimage;
+        DWORD                 SizeOfHeaders;
+        DWORD                 CheckSum;
+        WORD                  Subsystem;
+        WORD                  DllCharacteristics;
+        DWORD                 SizeOfStackReserve;
+        DWORD                 SizeOfStackCommit;
+        DWORD                 SizeOfHeapReserve;
+        DWORD                 SizeOfHeapCommit;
+        DWORD                 LoaderFlags;
+        DWORD                 NumberOfRvaAndSizes;
+        IMAGE_DATA_DIRECTORY  DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES]; 
+      } IMAGE_OPTIONAL_HEADER, *PIMAGE_OPTIONAL_HEADER;
+    - Magic member var defines if PE is 32/64 bit
+    - AddressOfEntry hodls the RVA of the EntryPoint (EP) of the module; the RVA
+      of the address inside the module itself which is the location of the first
+      instruction to be executed.
+      
+5. String Refs & Basic Patching
+  - KEY: Finding the allgorithms we want.
 
+5.2 - String nrefs
+  - using string refs we may be able to locate pieces of code.
+  - String ref == asm instruction referring to memory location where
+    a string is stored.

@@ -282,3 +282,207 @@ user@box:~/Downloads$ hexdump -C test
   - using string refs we may be able to locate pieces of code.
   - String ref == asm instruction referring to memory location where
     a string is stored.
+
+5.4 - Analyzing the RE5 file
+  - When we first load the binary into ollydbg, we land at the entry pint, 0x004020D0
+
+=====
+EAX 7789EF2A kernel32.BaseThreadInitThunk
+ECX 00000000
+EDX 004020D0 RE_Cours.<ModuleEntryPoint>
+EBX 7FFDF000
+ESP 0012FF8C
+EBP 0012FF94
+ESI 00000000
+EDI 00000000
+EIP 004020D0 RE_Cours.<ModuleEntryPoint>            <<<<---------------- ENTRY POINT
+C 0  ES 0023 32bit 0(FFFFFFFF)
+P 1  CS 001B 32bit 0(FFFFFFFF)
+A 0  SS 0023 32bit 0(FFFFFFFF)
+Z 1  DS 0023 32bit 0(FFFFFFFF)
+S 0  FS 003B 32bit 7FFDE000(FFF)
+T 0  GS 0000 NULL
+D 0
+O 0  LastErr ERROR_ENVVAR_NOT_FOUND (000000CB)
+EFL 00000246 (NO,NB,E,BE,NS,PE,GE,LE)
+ST0 empty 0.0
+ST1 empty 0.0
+ST2 empty 0.0
+ST3 empty 0.0
+ST4 empty 0.0
+ST5 empty 0.0
+ST6 empty 0.0
+ST7 empty 0.0
+               3 2 1 0      E S P U O Z D I
+FST 0000  Cond 0 0 0 0  Err 0 0 0 0 0 0 0 0  (GT)
+FCW 027F  Prec NEAR,53  Mask    1 1 1 1 1 1
+======
+  - Note at the prompt, whatever we enter keeps giving us "This code is invalid"
+  - That string gives us a clue of what to search for, because it can lead us to 
+    the location in the code where the decision is made to call that string.
+  - Right click CPU-Mainthread window -> Search For -> Search for all referenced text strnigs
+  -  Therein we find a reference to our message "This code is Invalid
+===
+Text strings referenced in RE_Cours:.text, item 16
+ Address=00402E9E
+ Disassembly=MOV DWORD PTR SS:[EBP-44],RE_Cours.0063B2DC
+ Text string=ASCII "This code is invalid!!!"
+===
+  - The instruction referencing our sring is at 00402E9E; if we double click
+    this address we will be taken there
+  - The logic happens a few lines above this address
+
+===
+00402E64  |. EB 05          JMP SHORT RE_Cours.00402E6B
+00402E66  |> B8 A8B26300    MOV EAX,RE_Cours.0063B2A8
+00402E6B  |> 50             PUSH EAX
+00402E6C  |. E8 F3942200    CALL RE_Cours.0062C364
+00402E71  |. 83C4 08        ADD ESP,8
+00402E74  |. 85C0           TEST EAX,EAX
+                                                                         |--------------------------------
+00402E76  |. 75 1F          JNZ SHORT RE_Cours.00402E97 <---------------- SENDS THE CONTROL to one instr|
+                                                                         | above our string reference    |
+                                                                         --------------------------------
+00402E78  |. C745 C8 ACB263>MOV DWORD PTR SS:[EBP-38],RE_Cours.0063B>;  ASCII "Congratulations!"
+00402E7F  |. C745 C4 BDB263>MOV DWORD PTR SS:[EBP-3C],RE_Cours.0063B>;  ASCII "Your code is valid!!!"
+00402E86  |. 6A 40          PUSH 40                                  ; /Style = MB_OK|MB_ICONASTERISK|MB_APPLMODAL
+00402E88  |. FF75 C8        PUSH DWORD PTR SS:[EBP-38]               ; |Title
+00402E8B  |. FF75 C4        PUSH DWORD PTR SS:[EBP-3C]               ; |Text
+00402E8E  |. 6A 00          PUSH 0                                   ; |hOwner = NULL
+00402E90  |. E8 8F6C2300    CALL <JMP.&USER32.MessageBoxA>           ; \MessageBoxA
+00402E95  |. EB 1D          JMP SHORT RE_Cours.00402EB4
+
+                        |||||||||| JNZ Short above lands at the line below ||||||||||||||||||||
+00402E97  |> C745 C0 D3B263>MOV DWORD PTR SS:[EBP-40],RE_Cours.0063B>;  ASCII "Warning!"
+00402E9E  |. C745 BC DCB263>MOV DWORD PTR SS:[EBP-44],RE_Cours.0063B>;  ASCII "This code is invalid!!!"
+===
+  - What really happens
+    - Program calls a function at 402E6C, RE_Course.0062C364, which will return
+      a value to EAX, after the function returns, then stack is cleaned ( add ESP, 8)
+      and then the value in EAX is tested; if it's a non zero number, if it's NOT
+      zero, i.e JNZ, the jump is taken, otherwise we would hit line 402E78
+  - Basic memory patching
+    - To bypass this check, we can patch the binary; the OPCODE (instruction) has the hex 
+      value of 75 1F as seen below
+      ===
+      00402E76  |. 75 1F          JNZ SHORT RE_Cours.00402E97
+      ===
+    - Note the label is not needed, the above is the same as 
+      ===
+      00402E76  |. 75 1F          JNZ SHORT 00402E97
+      ===
+    - Breakdown of the values
+      - 00402E97  == The VA of the first byte (0x75) of the instruction
+      - 0x75      == Opcode of the JNZ insx
+      - 0x1F      == The number of bytes to "jump" by redirecting the eip
+      - this can be confirmed with some addition
+      - THe JNZ instruction ends at 0x402E77 (the number of bytes to skip, 1F)
+        - 0x402E77 + 1F == 402E96, meaning everything up to and including 402E96
+          should be "jumped" meaning the next instruction will be 402E97!
+    - 3 general ways to patch a conditional jump
+      - NOP out the instruction (since it's two bytes, it would be replaced with
+        two NOPS, or 0x90 ox 90, leaving us with this
+        ===
+        0x00402E76  9090    NOP NOP
+        ===
+        - If we right click the line -> binary -> edit, we can change 75 1F to 90 90
+        then click save and keep size
+        - Now when we run the binary, we get "Your code is valid!"
+        - We can right click each 90 and select undo selection to continue other patching options
+      - FLIP THE LOGIC
+        - Since this is JNZ, inverted logic would be JZ, i.e jump if zero, the opcode for this is 0x74
+        - To do this, select insx -> right click -> assemble
+        - This leaves us with
+          ===
+          00402E76     74 1F          JE SHORT RE_Cours.00402E97
+          ===
+        - Now we can run (or enter the code again since the program is still running)
+        - Undo selection to restore the instruciton and we'll see the third case
+      - ZERO OUT THE OPERAND
+        - The JNZ struction has to be told how many bytes to skip, so if it's told 00
+          it will skip zero bytes and have the same effect as the above two insx.
+        - Right click -> binary -> edit , change 1F to 00
+        - Submit a code again, and note we've achieved the same effect.
+
+5.4.6 - Executable patching in ollydbg
+  - The above samples worked but were only in-memory patches, meaning they only
+    worked on the running sample.
+  - To achieve persistence, we'd have to write these to the binary itself.
+  - To do this
+    1. make your desired modification as we did previously
+    2. Right click the edited byes
+    3. Select "Copy to Executable" 
+    4. Click "Selection" or all modifications if this was the only modification
+
+5.4.7 - VA --> OFFSET manual calculation
+  - To permanently modify the bytes, we'd have to know the offset inside the phys file.
+  - Olly does this automatically, but we should know how to do this manually. 
+  - To patch the bytes , we need to now their offsets.
+  - We can find such info in the header
+    1. Hit alt+M in olly to see how the exee is mapped inmemory with it's modules
+    2. Recall the address of the byte we want to patch; for option 3, this would
+       be 0x402E77, or 1f, which we're changing to 00
+    3. In the mapped memory view, you might notice that this insx address falls into
+      the .text section which starts at 401000, and has a size of 23A000, meaning
+      that everythong from 0x401000 -- 0x63B000 (exclusive) is in the .text section
+    4. Note that the image base (with PE Header) is at 0x00400000 (default for windows PE)
+    5. Choose the first line in the memory map ( one with the PE header, i.e. 0x400000)
+      right click -> Dump in CPU
+    6. In the data window (bottom left, typical hexdump) right click -> Special -> PE Header.
+      This dumps the PE header in a readable format in the data window
+      ===
+      00400000   4D 5A        ASCII "MZ"           ; DOS EXE Signature
+      00400002   5000         DW 0050              ;  DOS_PartPag = 50 (80.)
+      00400004   0200         DW 0002              ;  DOS_PageCnt = 2
+      00400006   0000         DW 0000              ;  DOS_ReloCnt = 0
+      00400008   0400         DW 0004              ;  DOS_HdrSize = 4
+      0040000A   0F00         DW 000F              ;  DOS_MinMem = F (15.)
+      0040000C   FFFF         DW FFFF              ;  DOS_MaxMem = FFFF (65535.)
+      0040000E   0000         DW 0000              ;  DOS_ReloSS = 0
+      00400010   B800         DW 00B8              ;  DOS_ExeSP = B8
+      00400012   0000         DW 0000              ;  DOS_ChkSum = 0
+      00400014   0000         DW 0000              ;  DOS_ExeIP = 0
+      00400016   0000         DW 0000              ;  DOS_ReloCS = 0
+      00400018   4000         DW 0040              ;  DOS_TablOff = 40
+      0040001A   1A00         DW 001A              ;  DOS_Overlay = 1A
+      ===
+    7. Now we need to locate thee line that mentions ".text"; this is here
+      ===
+      004002F8   2E 74 65 78 >ASCII ".text"        ; SECTION
+      00400300   00A02300     DD 0023A000          ;  VirtualSize = 23A000 (2334720.)
+      00400304   00100000     DD 00001000          ;  VirtualAddress = 1000
+      00400308   00922300     DD 00239200          ;  SizeOfRawData = 239200 (2331136.)
+      0040030C   00060000     DD 00000600          ;  PointerToRawData = 600
+      00400310   00000000     DD 00000000          ;  PointerToRelocations = 0
+      00400314   00000000     DD 00000000          ;  PointerToLineNumbers = 0
+      00400318   0000         DW 0000              ;  NumberOfRelocations = 0
+      0040031A   0000         DW 0000              ;  NumberOfLineNumbers = 0
+      0040031C   20000060     DD 60000020          ;  Characteristics = CODE|EXECUTE|READ
+      ===
+      - This is the IMAGE_SECTION_HEADER structure previously mentioned. 
+      - There may be cases where multiple sections have the sane name, but we
+        can identify them by the value of their RVA
+      - VirtualSize, is the size of the section in memory
+      - VirtualAddress: the RVA of the section in memory, not the VirtualAddress
+      - SizeofRawData : size of the section in the file
+      - PointerToRawData : starting offset of the section in the file
+    8. This gives us all the data that we need
+      - byte-offset = Byte_VA - (image-base+Section-RVA)+PointerToRawData)
+      - 0x402E77-(0x400000+0x1000)+0x600
+        = 0x402E77-0x401000+0x600
+        = 0x402E77-0x400A00
+        = 0x2477
+      - So in a hex editor we should be able to find this byte at the given offset
+        - Bingo
+        ===
+                    00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+        0x00002460  05 8B 45 FC EB 05 B8 A8 B2 63 00 50 E8 F3 94 22 
+        0x00002470  00 83 C4 08 85 C0 75 1F
+        ===
+        And sure enough, 2477 == 1F, which we can change to 00
+
+5.4.8 - Conclusion
+  - This method works for this, but won't always works.
+  - What happens when strings are encrypted? 
+
+

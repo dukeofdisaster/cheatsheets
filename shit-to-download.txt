@@ -1,3 +1,6 @@
 # a list of utilities that aren't default in kali but should be included
 dirsearch.py
 https://github.com/danielmiessler/SecLists.git
+
+# impacket; for when you got creds but need to execute commands
+https://github.com/SecureAuthCorp/impacket.git

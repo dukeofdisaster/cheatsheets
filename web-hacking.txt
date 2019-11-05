@@ -1,3 +1,7 @@
 # try NON standard verbs over http and see what happens
 # pipe
 curl -vX BOB http://192.168.56.104/index.php
+
+
+# Target is apache, can you read .htpasswd? /var/www/html/.htpasswd
+# if so, try cracking any found hashes

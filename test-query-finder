@@ -1,0 +1,92 @@
+$query= blahblhbalsdjflaskfj
+$q=falskfjdaslfdkjfalsdkfjlasdkfjaslf
+$qry=asdlfkjasdflkasjdfalsfdkj
+$query = blahblhbalsdjflaskfj
+$q =falskfjdaslfdkjfalsdkfjlasdkfjaslf
+$qry =asdlfkjasdflkasjdfalsfdkj
+
+$conn = mysql_connect(“localhost”,“username”,“password”);
+// dynamically build the sql statement with the input
+$query = “SELECT ∗ FROM Products WHERE Price < ‘$_GET[“val”]’ ”.
+ “ORDER BY ProductDescription”;
+// execute the query against the database
+$result = mysql_query($query);
+// iterate through the record set
+while($row = mysql_fetch_array($result, MYSQL_ASSOC))
+{
+// display the results to the browser
+echo “Description : {$row[‘ProductDescription’]} <br>”.
+ “Product ID : {$row[‘ProductID’]} <br>”.
+ “Price : {$row[‘Price’]} <br><br>”;
+
+ $conn = mysql_connect(“localhost”,“username”,“password”);
+// dynamically build the sql statement with the input
+$query = “SELECT userid FROM CMSUsers WHERE user = ‘$_GET[“user”]’ ”.
+ “AND password = ‘$_GET[“password”]’”;
+// execute the query against the database
+$result = mysql_query($query);
+// check to see how many rows were returned from the database
+$rowcount = mysql_num_rows($result);
+// if a row is returned then the credentials must be valid, so
+// forward the user to the admin pages
+if ($rowcount ! = 0){header(“Location: admin.php”);}
+// if a row is not returned then the credentials must be invalid
+else {die(‘Incorrect username or password, please try again.’)}
+
+// a dynamically built sql string statement in PHP
+$query = “SELECT ∗ FROM table WHERE field = ‘$_GET[“input”]’”;
+// a dynamically built sql string statement in .NET
+query = “SELECT ∗ FROM table WHERE field = ‘” + request.getParameter(“input”) + “’”;
+
+$SQL = “SELECT ∗ FROM table WHERE field = ‘$_GET[“input”]’;”;
+// execute sql statement
+$result = mysql_query($SQL);
+// check to see how many rows were returned from the database
+$rowcount = mysql_num_rows($result);
+
+// iterate through the record set returned
+$row = 1;
+while ($db_field = mysql_fetch_assoc($result)) {
+if ($row <= $rowcount){
+ print $db_field[$row]. “<BR>”;
+ $row++;
+ }
+}
+
+// build dynamic SQL statement
+$SQL = “SELECT ∗ FROM table WHERE field = $_GET[“userid”]”;
+// execute sql statement
+$result = mysql_query($SQL);
+// check to see how many rows were returned from the database
+$rowcount = mysql_num_rows($result);
+// iterate through the record set returned
+$row = 1;
+while ($db_field = mysql_fetch_assoc($result)) {
+if ($row <= $rowcount){
+ print $db_field[$row]. “<BR>”;
+ $row++;
+ }
+}
+
+1 UNION ALL SELECT LOAD_FILE(‘/etc/passwd’)--
+
+SELECT ∗ FROM TABLE
+WHERE
+USERID = 1 UNION ALL SELECT LOAD_FILE(‘/etc/passwd’)—
+
+// build dynamic SQL statement
+$SQL = “SELECT”. $_GET[“column1”]. “,”. $_GET[“column2”]. “,”. $_GET[“column3”]. “ FROM ”.
+$_GET[“table”];
+// execute sql statement
+$result = mysql_query($SQL);
+// check to see how many rows were returned from the database
+$rowcount = mysql_num_rows($result);
+// iterate through the record set returned
+$row = 1;
+while ($db_field = mysql_fetch_assoc($result)) {if ($row <= $rowcount){print
+$db_field[$row]. “<BR>”;
+$row++;
+}
+}
+
+"STRING"+"OTHERSTRING"

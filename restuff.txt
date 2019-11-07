@@ -482,7 +482,257 @@ Text strings referenced in RE_Cours:.text, item 16
         And sure enough, 2477 == 1F, which we can change to 00
 
 5.4.8 - Conclusion
-  - This method works for this, but won't always works.
+  - This method works for this, but won't always work.
   - What happens when strings are encrypted? 
 
+6. - Exploring the stack
+  - Run and observ
+    - Same, shows an alert
+    - "This code is invalid!!!
+  - Search for strings
+    - No dice, there's no reference to the given strings
+    - Devs used simple XOR operation to encrypt the strings
+    - Searchinng for strinsg won't help, we need technical skill now
 
+6.3.4 - Exploring the Stack
+  - Lunch the program and try to verify the code "eLearnSecurity"
+  - as soon as the message box appears, suspend execution of the threads by pressing F12
+  - In the registers window you'll notice
+    - ESP == 0x0012F46C
+    - IN the stack window (bottom left) we see
+    ===
+    0012F438   75236449  RETURN to USER32.75236449
+    0012F43C   75253723  RETURN to USER32.75253723 from USER32.WaitMessage
+    0012F440   00000000
+    0012F444   00000000
+    0012F448   00000000
+    0012F44C   000E0142
+    0012F450   00000113
+    0012F454   00000001
+    0012F458   00000000
+    0012F45C   00099B69
+    0012F460   000001A4
+    0012F464   00000121
+    0012F468   00000000
+    0012F46C  /0012F490
+    0012F470  |75253A20  RETURN to USER32.75253A20 from USER32.7525363B
+    0012F474  |0006014A
+    0012F478  |00000000
+    0012F47C  |00000000
+    0012F480  |00000000
+    0012F484  |00010003
+    0012F488  |00000000
+    0012F48C  |0012F690
+    0012F490  ]0012F534
+    0012F494  |7527E3CD  RETURN to USER32.7527E3CD from USER32.7525396E
+    0012F498  |75220000  OFFSET USER32.#2436
+    0012F49C  |002DAF60
+    0012F4A0  |00000000
+    0012F4A4  |7527D940  USER32.7527D940
+    ===
+    - We see the return addresses of some functions.
+    - What we'll generally be looking for is a return address that's inside the
+      exe itself, or one of it's DLL's, not the system dll's which are usually located at
+      the higher numbers we see above ,75236449.
+    - Knowing Windows API calls used near the code we're looking for can be useful, for
+      example one of the stack's refers to WaitMessage, and another might refer to MessageBoxA
+    - As we keep scrolling down the stack, we eventually see our error code, but it doesn't only occur
+      here, it occurs multiple times
+    ===
+    0012F4D0  |0063B320  UNICODE "This code is invalid!!!"
+    ===
+    - If we keep scrolling down, we see a Return location that's actually inside the EXE address space
+    ===
+    0012F72C  |00402F31  RETURN to RE_Cours.00402F31 from <JMP.&USER32.MessageBoxW>
+    0012F730  |00000000
+    0012F734  |0063B320  UNICODE "This code is invalid!!!"
+    0012F738  |0063B30E  UNICODE "Warning!"
+    ===
+      - Note all the references to the unicode string are at the same place
+        0x0063B320
+    - We can inspect that Re_Course MessageBOx api by right clicking 0x00402F31--> Follow 
+      in disassembler
+    - This takes us to the following location
+    ===
+    00402F31  |. FF75 BC        PUSH DWORD PTR SS:[EBP-44]               ; /Arg1
+    00402F34  |. E8 B7FEFFFF    CALL RE_Cours.00402DF0                   ; \RE_Cours.00402DF0
+    00402F39  |. 59             POP ECX
+    ===
+
+6.3.5  - Evaluating MessageBox API Parameters
+  - Just above the address we went to, is the messagebox api
+  ===
+  00402F22  |. 6A 30          PUSH 30                                  ; /Style = MB_OK|MB_ICONEXCLAMATION|MB_APPLMODAL
+  00402F24  |. FF75 BC        PUSH DWORD PTR SS:[EBP-44]               ; |Title
+  00402F27  |. FF75 B8        PUSH DWORD PTR SS:[EBP-48]               ; |Text
+  00402F2A  |. 6A 00          PUSH 0                                   ; |hOwner = NULL
+  00402F2C  |. E8 156D2300    CALL <JMP.&USER32.MessageBoxW>           ; \MessageBoxW
+  00402F31  |. FF75 BC        PUSH DWORD PTR SS:[EBP-44]               ; /Arg1
+  00402F34  |. E8 B7FEFFFF    CALL RE_Cours.00402DF0                   ; \RE_Cours.00402DF0
+  ===
+  - Just above the call to MessageBoxW we see the function getting 4 paramters
+    - Push 30
+    - Push DWORD PTR SS:[EBP-44]
+    - Push DWORD PTR SS:[EBP-48]
+    - Push 0
+  - NOTE: Windows APIs use __stdcall convention and parameters are pushed onto
+    the stack right to left
+  - the messagebox func looks like this
+  - int WINAPI MessageBox(
+      _In_opt_ HWND hWnd,
+      _In_opt_ LPCTSTR IpText,
+      _In_opt_ LPCTSTR IpCaption,
+      _In_ UINT uType,
+    );
+  - That is we have
+    - Push 30 == UINT uType, unsigned int that describes the style of the message box
+    - Push DOWRD PTR SS:[EBP-44],, string for the title of the dialog box
+    - Push DWORD PTR SS:[ebp-48], string that needs to be displayed
+    - Push 0 == handle to the owner window (usually NULL)
+  - If we look back at the stack, we can see how this played out
+  ===
+  0012F72C  |00402F31  RETURN to RE_Cours.00402F31 from <JMP.&USER32.MessageBoxW>
+  0012F730  |00000000 -- hWnd == Push 0
+  0012F734  |0063B320  UNICODE "This code is invalid!!!", IpText == Push DWORD PTR SS:[EBP-48]
+  0012F738  |0063B30E  UNICODE "Warning!", IpCaption == Push DWORD PTR SS:[ebp-44]
+  0012F73C  |00000030 -- uType == Push 30
+  ===
+  - NOTE: Some winapi names have A / W appended to end to indicate their ANSI or
+    Unicode name. 
+    - e.g. MessageBoxA == ASCII strings to be used
+    - e.g. MessageBoxW == Unicode strings to be used
+
+6.3.6 - Reversing the Logic
+  - What we know
+    - The program sets up the stack and calls the messagebox winapi at address
+      0x00402F2C which tells us whether or not our code is valid
+    ===
+    00402F2C  |. E8 156D2300    CALL <JMP.&USER32.MessageBoxW>           ; \MessageBoxW
+    ===
+    - If we scroll up, we see another messagebox api call at 0x00402EE0
+    ===
+    00402ED6  |. 6A 40          PUSH 40                                  ; /Style = MB_OK|MB_ICONASTERISK|MB_APPLMODAL
+    00402ED8  |. FF75 C4        PUSH DWORD PTR SS:[EBP-3C]               ; |Title
+    00402EDB  |. FF75 C0        PUSH DWORD PTR SS:[EBP-40]               ; |Text
+    00402EDE  |. 6A 00          PUSH 0                                   ; |hOwner = NULL
+    00402EE0  |. E8 616D2300    CALL <JMP.&USER32.MessageBoxW>           ; \MessageBoxW
+    ===
+    - If we keep going up, we eventually see a JNZ not far from this second
+      messagebox call, indicating some validation/logic is going on
+    ===
+    00402EAB  |. 75 4C          JNZ SHORT RE_Cours.00402EF9
+    ===
+    - We can inspect what's going on in the stack by setting a breakpoint at the call
+      that occurs right above this JNZ at this address
+    ===
+    00402EA1  |. E8 46952200    CALL RE_Cours.0062C3EC
+    ===
+    - We can resume execution by hitting F9 or the play botton (you may have to
+      select OK on the warning messagebox)
+    - If successful we should see "Paused" on the bottom right hand side of our
+      debugger window. 
+    - Our registers look like this
+    ===
+    EAX 0012F784
+    ECX 02C9228C UNICODE "eLearnSecurity"
+    EDX 02C8EE40
+    EBX 02C86E30
+    ESP 0012F738
+    EBP 0012F78C
+    ESI 00524C2C RE_Cours.00524C2C
+    EDI 0012F938
+    EIP 00402EA1 RE_Cours.00402EA1
+    C 0  ES 0023 32bit 0(FFFFFFFF)
+    P 0  CS 001B 32bit 0(FFFFFFFF)
+    A 0  SS 0023 32bit 0(FFFFFFFF)
+    Z 0  DS 0023 32bit 0(FFFFFFFF)
+    S 0  FS 003B 32bit 7FFDE000(FFF)
+    T 0  GS 0000 NULL
+    D 0
+    O 0  LastErr ERROR_SUCCESS (00000000)
+    EFL 00200202 (NO,NB,NE,A,NS,PO,GE,G)
+    ST0 empty 0.0
+    ST1 empty 0.0
+    ST2 empty 22781360.000000000000
+    ST3 empty 9.7850556300369536000e+16
+    ST4 empty 2.9555362188558435000e+16
+    ST5 empty 2.8429329137270898000e+16
+    ST6 empty 2.7303506537611365000e+16
+    ST7 empty 3.4058970405077106000e+16
+                   3 2 1 0      E S P U O Z D I
+    FST 4000  Cond 1 0 0 0  Err 0 0 0 0 0 0 0 0  (EQ)
+    FCW 1372  Prec NEAR,64  Mask    1 1 0 0 1 0
+    ==
+    - NOTE that EIP should be our breakpoint, at 0x00402EA1
+    - And if we look at the stack, we see what appears to be our correct code
+      as well as the code we entered
+    ===
+    0012F738   0063B26C  UNICODE "Fr0m-sma11-b3g1nn1ng5-c0m3-grea7-th1ng5"
+    0012F73C   02C9228C  UNICODE "eLearnSecurity"
+    ===
+    - This now seems intuitive; if we're going to compare two strings they would
+      likely be immediately available to whatever function is doing the comparing
+      and would be right next to each other on the stack
+    - If we supply this value as our code, we see indeed that it is valid.
+  - What's occurring
+    - After app decrypts the correct code, it pushes the two string addresses
+      to the stack.
+    - The first address pushed is a pointer to our supplied string, the second
+      one (above ours) is the correct code.
+    - After this, app calls a function that makes the comparison.
+    - If the two strings match, the function will return 0 in EAX, otherwise a
+      non-zero number will be returned.
+    - If the value returned to EAX == 0, then TEST EAX, EAX will set the zero
+      flag, ZF, so ZF=1, and the JNZ, Jump if ZF is not set, will not be executed
+      since the result on the register is zero
+
+6.3.7
+  - From here we can patch the code to be valid regardless of what's supplied
+  - Locating our JNZ 
+  ===
+  00402EAB  |. 75 4C          JNZ SHORT RE_Cours.00402EF9
+  ===
+  - Recall our byte offset calculation
+  - byte-offset = Byte_VA - (image-base+Section-RVA)+PointerToRawData)
+  - ALT+M to see how the physical memory is mapped 
+  ===
+  Memory map, item 14
+   Address=00401000
+   Size=0023A000 (2334720.)
+   Owner=RE_Cours 00400000
+   Section=.text
+   Contains=code
+   Type=Imag 01001002
+   Access=R
+   Initial access=RWE
+  ===
+  - Choose the line with the image base, PE, right click -> dump in cpu
+  - In the bottom left hand side, if .text section hasn't been located, or 
+    you dn't see the human readable PE info, you may need to right click -> special, PE
+  ===
+  004002F8   2E 74 65 78 >ASCII ".text"        ; SECTION
+  00400300   00A02300     DD 0023A000          ;  VirtualSize = 23A000 (2334720.)
+  00400304   00100000     DD 00001000          ;  VirtualAddress = 1000
+  00400308   00922300     DD 00239200          ;  SizeOfRawData = 239200 (2331136.)
+  0040030C   00060000     DD 00000600          ;  PointerToRawData = 600
+  00400310   00000000     DD 00000000          ;  PointerToRelocations = 0
+  00400314   00000000     DD 00000000          ;  PointerToLineNumbers = 0
+  00400318   0000         DW 0000              ;  NumberOfRelocations = 0
+  0040031A   0000         DW 0000              ;  NumberOfLineNumbers = 0
+  0040031C   20000060     DD 60000020          ;  Characteristics = CODE|EXECUTE|READ
+  ===
+  - 
+  - So the byte we want to zero out is at 402EAC
+  - byte-offset = 402EAC - (image_base + section_rva)+PointerToRawdata_
+    = 402EAC - (0x400000+0x1000)+0x600
+    = 402EAC - 401000 + 0x600
+    = 1EAC + 0x600
+    = 24AC
+  - If our calculation is correct, when we open up this binary in the hexeditor,
+    we should be able to find the 75 4C instruction
+  - Sure enough
+    - Note the below offset is what's shown in the editor, not sure
+      why it starts at 02
+                 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    - 0x000024A0 46 95 22 00 83 C4 08 85 C0 75 4C FF 75 C8
+    - we patch, and we're good

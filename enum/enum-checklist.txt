@@ -1,0 +1,22 @@
+# So you think you've did enough enumeration but you're coming up stuck? Ask
+# yourself these questions and if any of them are NO, GO DO IT!!!!
+1. Did you try mulitple wordlists?
+  - directory-list-2.3-*.txt
+  - SecLists?
+  - TODO: Add more lists
+
+2. Did you try relevant extensions?
+  - According to this article: https://community.microstrategy.com/s/article/KB43895-Which-file-extensions-must-be-allowed-by-IIS-7-for-a?language=en_US
+  - IIS 7.5 must allow the following extensions
+    - asp, aspx, html, css, js, png, jpg, gif, bmp, xml, swf
+  - Apache?
+    - try others: php
+  - Tools
+    - dirsearch -u someurrl -w somewordlist -e asp,aspx,html,bmp
+      - This requeres ".%EXt" to b appended to each word if you're using dirsearh
+      - cat somewordlist | sed 's/$/\.%EXT%/' > somewordlist-with-EXT.txt
+    - wfuzz -c -z,somewordlistpathhere --hc 404 http://someurlhere.com/FUZZ.asp
+3. Did you try a different HTTP method?
+  - directory bruteforcers use GET by default, switch it up with a POST! (or other)
+
+

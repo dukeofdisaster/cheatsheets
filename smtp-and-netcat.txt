@@ -1,0 +1,64 @@
+# often we come across smtp services on boxes, but how to interact?
+root@box~/# netcat someserver.com 110
++OK Dovecot ready.
+user sitsero      <--------- USER TYPED
++OK
+pass kHGuERB29DNiNE <------ USER TYPED
++OK Logged in.
+retr 2              <------ USER TYPED
++OK 514 octets
+Return-Path: <root@blahb.ru
+X-Original-To: sitsero
+Delivered-To: sitsero@blahb.ru
+Received: by blahb (Postfix, from userid 0)
+	id 4227420AEB; Sat, 29 Apr 2017 13:12:06 +0300 (EEST)
+To: sitsero@blahb.ru
+Subject: Forum Access Details
+Message-Id: <20170429101206.4227420AEB@blahb>
+Date: Sat, 29 Apr 2017 13:12:06 +0300 (EEST)
+From: root@blahb.ru (root)
+
+Hi there, your credentials for our "secret" forum are below :)
+
+username: sitsero
+password: kIEnnfEKJ#9UmdO
+
+Regards
+.
+retr 3
+-ERR There's no message 3.
+retr 4
+-ERR There's no message 4.
+retr 1
++OK 977 octets
+Return-Path: <www-data@blahb.ru>
+X-Original-To: sitsero@blahb.ru
+Delivered-To: sitsero@blahb.ru
+Received: by blahb (Postfix, from userid 33)
+	id 7150023B32; Mon, 17 Apr 2017 20:15:40 +0300 (EEST)
+To: sitsero@blahb.ru
+Subject: New WordPress Site
+X-PHP-Originating-Script: 33:class-phpmailer.php
+Date: Mon, 17 Apr 2017 17:15:40 +0000
+From: WordPress <wordpress@blahb.ru>
+Message-ID: <00edcd034a67f3b0b6b43bab82b0f872@blahb.ru>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Your new WordPress site has been successfully set up at:
+
+https://blahb.ru
+
+You can log in to the administrator account with the following information:
+
+Username: admin
+Password: The password you chose during the install.
+Log in here: https://blahb.ru/wp-login.php
+
+We hope you enjoy your new site. Thanks!
+
+--The WordPress Team
+https://wordpress.org/
+.
+

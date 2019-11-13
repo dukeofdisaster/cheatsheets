@@ -1,0 +1,2 @@
+# various flags for tools to ignore certificate checks.
+wget --no-check-certificate https://somebrokencertsite.com

@@ -2,6 +2,8 @@
 mkdir myalternate_repo
 cd myalternate_repo
 git init
+  - optionally use: git init --bare
+  - think this is the preferred way IIRC; 
 
 # add an alternative remote to push to
 git remote add alt user@server:/path/to/git/repo.git

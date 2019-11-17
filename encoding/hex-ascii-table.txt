@@ -1,0 +1,385 @@
+ 	BIN 	OCT 	HEX 	Char
+	000 	0000 0000 	0 	0x00 	NUL - Null character. Unicode symbol: ␀
+	--MD5: cfcd208495d565ef66e7dff9f98764da
+	--SHA1: b6589fc6ab0dc82cf12099d1c2d40ab994e8410c
+	001 	0000 0001 	1 	0x01 	SOH - Start of Heading. Unicode symbol: ␁
+	--MD5: c4ca4238a0b923820dcc509a6f75849b
+	--SHA1: 356a192b7913b04c54574d18c28d46e6395428ab
+	002 	0000 0010 	2 	0x02 	STX - Start of text. Unicode symbol: ␂
+	--MD5: c81e728d9d4c2f636f067f89cc14862c
+	--SHA1: da4b9237bacccdf19c0760cab7aec4a8359010b0
+	003 	0000 0011 	3 	0x03 	ETX - End of Text. Unicode symbol: ␃
+	--MD5: eccbc87e4b5ce2fe28308fd9f2a7baf3
+	--SHA1: 77de68daecd823babbb58edb1c8e14d7106e83bb
+	004 	0000 0100 	4 	0x04 	EOT - End of Transmission. Unicode symbol: ␄
+	--MD5: a87ff679a2f3e71d9181a67b7542122c
+	--SHA1: 1b6453892473a467d07372d45eb05abc2031647a
+	005 	0000 0101 	5 	0x05 	ENQ - Enquiry. Unicode symbol: ␅
+	--MD5: e4da3b7fbbce2345d7772b0674a318d5
+	--SHA1: ac3478d69a3c81fa62e60f5c3696165a4e5e6ac4
+	006 	0000 0110 	6 	0x06 	ACK - Acknowledge. Unicode symbol: ␆
+	--MD5: 1679091c5a880faf6fb5e6087eb1b2dc
+	--SHA1: c1dfd96eea8cc2b62785275bca38ac261256e278
+	007 	0000 0111 	7 	0x07 	BEL - Bell, Alert. Unicode symbol: ␇
+	--MD5: 8f14e45fceea167a5a36dedd4bea2543
+	--SHA1: 902ba3cda1883801594b6e1b452790cc53948fda
+	008 	0000 1000 	10 	0x08 	BS - Backspace. Unicode symbol: ␈
+	--MD5: c9f0f895fb98ab9159f51fd0297e236d
+	--SHA1: fe5dbbcea5ce7e2988b8c69bcfdfde8904aabc1f
+	009 	0000 1001 	11 	0x09 	HT - Character Tabulation, Horizontal Tabulation. Unicode symbol: ␉
+	--MD5: 45c48cce2e2d7fbdea1afc51c7c6ad26
+	--SHA1: 0ade7c2cf97f75d009975f4d720d1fa6c19f4897
+	010 	0000 1010 	12 	0x0A 	LF - Line feed. Unicode symbol: ␊
+	--MD5: d3d9446802a44259755d38e6d163e820
+	--SHA1: b1d5781111d84f7b3fe45a0852e59758cd7a87e5
+	011 	0000 1011 	13 	0x0B 	VT - Line Tabulation, Vertical Tabulation. Unicode symbol: ␋
+	--MD5: 6512bd43d9caa6e02c990b0a82652dca
+	--SHA1: 17ba0791499db908433b80f37c5fbc89b870084b
+	012 	0000 1100 	14 	0x0C 	FF - Form Feed. Unicode symbol: ␌
+	--MD5: c20ad4d76fe97759aa27a0c99bff6710
+	--SHA1: 7b52009b64fd0a2a49e6d8a939753077792b0554
+	013 	0000 1101 	15 	0x0D 	CR - Carriage Return. Unicode symbol: ␍
+	--MD5: c51ce410c124a10e0db5e4b97fc2af39
+	--SHA1: bd307a3ec329e10a2cff8fb87480823da114f8f4
+	014 	0000 1110 	16 	0x0E 	SO - Shift Out. Unicode symbol: ␎
+	--MD5: aab3238922bcc25a6f606eb525ffdc56
+	--SHA1: fa35e192121eabf3dabf9f5ea6abdbcbc107ac3b
+	015 	0000 1111 	17 	0x0F 	SI - Shift In. Unicode symbol: ␏
+	--MD5: 9bf31c7ff062936a96d3c8bd1f8f2ff3
+	--SHA1: f1abd670358e036c31296e66b3b66c382ac00812
+	016 	0001 0000 	20 	0x10 	DLE - Data Link Escape. Unicode symbol: ␐
+	--MD5: c74d97b01eae257e44aa9d5bade97baf
+	--SHA1: 1574bddb75c78a6fd2251d61e2993b5146201319
+	017 	0001 0001 	21 	0x11 	DC1 - Device Control One (XON). Unicode symbol: ␑
+	--MD5: 70efdf2ec9b086079795c442636b55fb
+	--SHA1: 0716d9708d321ffb6a00818614779e779925365c
+	018 	0001 0010 	22 	0x12 	DC2 - Device Control Two. Unicode symbol: ␒
+	--MD5: 6f4922f45568161a8cdf4ad2299f6d23
+	--SHA1: 9e6a55b6b4563e652a23be9d623ca5055c356940
+	019 	0001 0011 	23 	0x13 	DC3 - Device Control Three (XOFF). Unicode symbol: ␓
+	--MD5: 1f0e3dad99908345f7439f8ffabdffc4
+	--SHA1: b3f0c7f6bb763af1be91d9e74eabfeb199dc1f1f
+	020 	0001 0100 	24 	0x14 	DC4 - Device Control Four. Unicode symbol: ␔
+	--MD5: 98f13708210194c475687be6106a3b84
+	--SHA1: 91032ad7bbcb6cf72875e8e8207dcfba80173f7c
+	021 	0001 0101 	25 	0x15 	NAK - Negative Acknowledge. Unicode symbol: ␕
+	--MD5: 3c59dc048e8850243be8079a5c74d079
+	--SHA1: 472b07b9fcf2c2451e8781e944bf5f77cd8457c8
+	022 	0001 0110 	26 	0x16 	SYN - Synchronous Idle. Unicode symbol: ␖
+	--MD5: b6d767d2f8ed5d21a44b0e5886680cb9
+	--SHA1: 12c6fc06c99a462375eeb3f43dfd832b08ca9e17
+	023 	0001 0111 	27 	0x17 	ETB - End of Transmission Block. Unicode symbol: ␗
+	--MD5: 37693cfc748049e45d87b8c7d8b9aacd
+	--SHA1: d435a6cdd786300dff204ee7c2ef942d3e9034e2
+	024 	0001 1000 	30 	0x18 	CAN - Cancel. Unicode symbol: ␘
+	--MD5: 1ff1de774005f8da13f42943881c655f
+	--SHA1: 4d134bc072212ace2df385dae143139da74ec0ef
+	025 	0001 1001 	31 	0x19 	EM - End of medium. Unicode symbol: ␙
+	--MD5: 8e296a067a37563370ded05f5a3bf3ec
+	--SHA1: f6e1126cedebf23e1463aee73f9df08783640400
+	026 	0001 1010 	32 	0x1A 	SUB - Substitute. Unicode symbol: ␚
+	--MD5: 4e732ced3463d06de0ca9a15b6153677
+	--SHA1: 887309d048beef83ad3eabf2a79a64a389ab1c9f
+	027 	0001 1011 	33 	0x1B 	ESC - Escape. Unicode symbol: ␛
+	--MD5: 02e74f10e0327ad868d138f2b4fdd6f0
+	--SHA1: bc33ea4e26e5e1af1408321416956113a4658763
+	028 	0001 1100 	34 	0x1C 	FS - File Separator. Unicode symbol: ␜
+	--MD5: 33e75ff09dd601bbe69f351039152189
+	--SHA1: 0a57cb53ba59c46fc4b692527a38a87c78d84028
+	029 	0001 1101 	35 	0x1D 	GS - Group Separator. Unicode symbol: ␝
+	--MD5: 6ea9ab1baa0efb9e19094440c317e21b
+	--SHA1: 7719a1c782a1ba91c031a682a0a2f8658209adbf
+	030 	0001 1110 	36 	0x1E 	RS - Record Separator. Unicode symbol: ␞
+	--MD5: 34173cb38f07f89ddbebc2ac9128303f
+	--SHA1: 22d200f8670dbdb3e253a90eee5098477c95c23d
+	031 	0001 1111 	37 	0x1F 	US - Unit Separator. Unicode symbol: ␟
+	--MD5: c16a5320fa475530d9583c34fd356ef5
+	--SHA1: 632667547e7cd3e0466547863e1207a8c0c0c549
+	032 	0010 0000 	40 	0x20 	SP - Space. Unicode symbol: ␠
+	--MD5: 6364d3f0f495b6ab9dcf8d3b5c6e0b01
+	--SHA1: cb4e5208b4cd87268b208e49452ed6e89a68e0b8
+	033 	0010 0001 	41 	0x21 	! - Exclamation mark (point).
+	--MD5: 182be0c5cdcd5072bb1864cdee4d3d6e
+	--SHA1: b6692ea5df920cad691c20319a6fffd7a4a766b8
+	034 	0010 0010 	42 	0x22 	" - Quotation mark, quotes, quotemarks.
+	--MD5: e369853df766fa44e1ed0ff613f563bd
+	--SHA1: f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59
+	035 	0010 0011 	43 	0x23 	# - Number sign, hash.
+	--MD5: 1c383cd30b7c298ab50293adfecb7b18
+	--SHA1: 972a67c48192728a34979d9a35164c1295401b71
+	036 	0010 0100 	44 	0x24 	$ - Dollar sign.
+	--MD5: 19ca14e7ea6328a42e0eb13d585e4c22
+	--SHA1: fc074d501302eb2b93e2554793fcaf50b3bf7291
+	037 	0010 0101 	45 	0x25 	% - Percent sign.
+	--MD5: a5bfc9e07964f8dddeb95fc584cd965d
+	--SHA1: cb7a1d775e800fd1ee4049f7dca9e041eb9ba083
+	038 	0010 0110 	46 	0x26 	& - Ampersand.
+	--MD5: a5771bce93e200c36f7cd9dfd0e5deaa
+	--SHA1: 5b384ce32d8cdef02bc3a139d4cac0a22bb029e8
+	039 	0010 0111 	47 	0x27 	' - Apostrophe.
+	--MD5: d67d8ab4f4c10bf22aa353e27879133c
+	--SHA1: ca3512f4dfa95a03169c5a670a4c91a19b3077b4
+	040 	0010 1000 	50 	0x28 	( - Left parenthesis, left round bracket.
+	--MD5: d645920e395fedad7bbbed0eca3fe2e0
+	--SHA1: af3e133428b9e25c55bc59fe534248e6a0c0f17b
+	041 	0010 1001 	51 	0x29 	) - Right parenthesis, right round bracket.
+	--MD5: 3416a75f4cea9109507cacd8e2f2aefc
+	--SHA1: 761f22b2c1593d0bb87e0b606f990ba4974706de
+	042 	0010 1010 	52 	0x2A 	* - Asterisk.
+	--MD5: a1d0c6e83f027327d8461063f4ac58a6
+	--SHA1: 92cfceb39d57d914ed8b14d0e37643de0797ae56
+	043 	0010 1011 	53 	0x2B 	+ - Plus sign.
+	--MD5: 17e62166fc8586dfa4d1bc0e1742c08b
+	--SHA1: 0286dd552c9bea9a69ecb3759e7b94777635514b
+	044 	0010 1100 	54 	0x2C 	, - Comma.
+	--MD5: f7177163c833dff4b38fc8d2872f1ec6
+	--SHA1: 98fbc42faedc02492397cb5962ea3a3ffc0a9243
+	045 	0010 1101 	55 	0x2D 	- - Hyphen-minus, minus sign.
+	--MD5: 6c8349cc7260ae62e3b1396831a8398f
+	--SHA1: fb644351560d8296fe6da332236b1f8d61b2828a
+	046 	0010 1110 	56 	0x2E 	. - Full stop, full point, dot.
+	--MD5: d9d4f495e875a2e075a1a4a6e1b9770f
+	--SHA1: fe2ef495a1152561572949784c16bf23abb28057
+	047 	0010 1111 	57 	0x2F 	/ - Slash.
+	--MD5: 67c6a1e7ce56d3d6fa748ab6d9af3fd7
+	--SHA1: 827bfc458708f0b442009c9c9836f7e4b65557fb
+	048 	0011 0000 	60 	0x30 	0 - Zero number, zero digit.
+	--MD5: 642e92efb79421734881b53e1e1b18b6
+	--SHA1: 64e095fe763fc62418378753f9402623bea9e227
+	049 	0011 0001 	61 	0x31 	1 - One number, one digit.
+	--MD5: f457c545a9ded88f18ecee47145a72c0
+	--SHA1: 2e01e17467891f7c933dbaa00e1459d23db3fe4f
+	050 	0011 0010 	62 	0x32 	2 - Two number, two digit.
+	--MD5: c0c7c76d30bd3dcaefc96f40275bdc0a
+	--SHA1: e1822db470e60d090affd0956d743cb0e7cdf113
+	051 	0011 0011 	63 	0x33 	3 - Three number, three digit.
+	--MD5: 2838023a778dfaecdc212708f721b788
+	--SHA1: b7eb6c689c037217079766fdb77c3bac3e51cb4c
+	052 	0011 0100 	64 	0x34 	4 - Four number, four digit.
+	--MD5: 9a1158154dfa42caddbd0694a4e9bdc8
+	--SHA1: a9334987ece78b6fe8bf130ef00b74847c1d3da6
+	053 	0011 0101 	65 	0x35 	5 - Five number, five digit.
+	--MD5: d82c8d1619ad8176d665453cfb2e55f0
+	--SHA1: c5b76da3e608d34edb07244cd9b875ee86906328
+	054 	0011 0110 	66 	0x36 	6 - Six number, six digit.
+	--MD5: a684eceee76fc522773286a895bc8436
+	--SHA1: 80e28a51cbc26fa4bd34938c5e593b36146f5e0c
+	055 	0011 0111 	67 	0x37 	7 - Seven number, seven digit.
+	--MD5: b53b3a3d6ab90ce0268229151c9bde11
+	--SHA1: 8effee409c625e1a2d8f5033631840e6ce1dcb64
+	056 	0011 1000 	70 	0x38 	8 - Eight number, eight digit.
+	--MD5: 9f61408e3afb633e50cdf1b20de6f466
+	--SHA1: 54ceb91256e8190e474aa752a6e0650a2df5ba37
+	057 	0011 1001 	71 	0x39 	9 - Nine number, nine digit.
+	--MD5: 72b32a1f754ba1c09b3695e0cb6cde7f
+	--SHA1: 9109c85a45b703f87f1413a405549a2cea9ab556
+	058 	0011 1010 	72 	0x3A 	: - Colon symbol, colon sign.
+	--MD5: 66f041e16a60928b05a7e228a89c3799
+	--SHA1: 667be543b02294b7624119adc3a725473df39885
+	059 	0011 1011 	73 	0x3B 	; - Semicolon symbol, semicolon sign.
+	--MD5: 093f65e080a295f8076b1c5722a46aa2
+	--SHA1: 5a5b0f9b7d3f8fc84c3cef8fd8efaaa6c70d75ab
+	060 	0011 1100 	74 	0x3C 	< - Less-than sign.
+	--MD5: 072b030ba126b2f4b2374f342be9ed44
+	--SHA1: e6c3dd630428fd54834172b8fd2735fed9416da4
+	061 	0011 1101 	75 	0x3D 	= - Equal symbol, equal sign.
+	--MD5: 7f39f8317fbdb1988ef4c628eba02591
+	--SHA1: 6c1e671f9af5b46d9c1a52067bdf0e53685674f7
+	062 	0011 1110 	76 	0x3E 	> - Greater-than sign.
+	--MD5: 44f683a84163b3523afe57c2e008bc8c
+	--SHA1: 511a418e72591eb7e33f703f04c3fa16df6c90bd
+	063 	0011 1111 	77 	0x3F 	? - Question mark (point).
+	--MD5: 03afdbd66e7929b125f8597834fa83a4
+	--SHA1: a17554a0d2b15a664c0e73900184544f19e70227
+	064 	0100 0000 	100 	0x40 	@ - At sign, at symbol, commercial at.
+	--MD5: ea5d2f1c4608232e07d3aa3d998e5135
+	--SHA1: c66c65175fecc3103b3b587be9b5b230889c8628
+	065 	0100 0001 	101 	0x41 	A - Letter A (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: fc490ca45c00b1249bbe3554a4fdf6fb
+	--SHA1: 2a459380709e2fe4ac2dae5733c73225ff6cfee1
+	066 	0100 0010 	102 	0x42 	B - Letter B (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 3295c76acbf4caaed33c36b1b5fc2cb1
+	--SHA1: 59129aacfb6cebbe2c52f30ef3424209f7252e82
+	067 	0100 0011 	103 	0x43 	C - Letter C (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 735b90b4568125ed6c3f678819b6e058
+	--SHA1: 4d89d294cd4ca9f2ca57dc24a53ffb3ef5303122
+	068 	0100 0100 	104 	0x44 	D - Letter D (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: a3f390d88e4c41f2747bfa2f1b5f87db
+	--SHA1: b4c96d80854dd27e76d8cc9e21960eebda52e962
+	069 	0100 0101 	105 	0x45 	E - Letter E (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 14bfa6bb14875e45bba028a21ed38046
+	--SHA1: a72b20062ec2c47ab2ceb97ac1bee818f8b6c6cb
+	070 	0100 0110 	106 	0x46 	F - Letter F (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 7cbbc409ec990f19c78c75bd1e06f215
+	--SHA1: b7103ca278a75cad8f7d065acda0c2e80da0b7dc
+	071 	0100 0111 	107 	0x47 	G - Letter G (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: e2c420d928d4bf8ce0ff2ec19b371514
+	--SHA1: d02560dd9d7db4467627745bd6701e809ffca6e3
+	072 	0100 1000 	110 	0x48 	H - Letter H (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 32bb90e8976aab5298d5da10fe66f21d
+	--SHA1: c097638f92de80ba8d6c696b26e6e601a5f61eb7
+	073 	0100 1001 	111 	0x49 	I - Letter I (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: d2ddea18f00665ce8623e36bd4e3c7c5
+	--SHA1: 35e995c107a71caeb833bb3b79f9f54781b33fa1
+	074 	0100 1010 	112 	0x4A 	J - Letter J (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: ad61ab143223efbc24c7d2583be69251
+	--SHA1: 1f1362ea41d1bc65be321c0a378a20159f9a26d0
+	075 	0100 1011 	113 	0x4B 	K - Letter K (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: d09bf41544a3365a46c9077ebb5e35c3
+	--SHA1: 450ddec8dd206c2e2ab1aeeaa90e85e51753b8b7
+	076 	0100 1100 	114 	0x4C 	L - Letter L (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: fbd7939d674997cdb4692d34de8633c4
+	--SHA1: d54ad009d179ae346683cfc3603979bc99339ef7
+	077 	0100 1101 	115 	0x4D 	M - Letter M (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 28dd2c7955ce926456240b2ff0100bde
+	--SHA1: d321d6f7ccf98b51540ec9d933f20898af3bd71e
+	078 	0100 1110 	116 	0x4E 	N - Letter N (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 35f4a8d465e6e1edc05f3d8ab658c551
+	--SHA1: eb4ac3033e8ab3591e0fcefa8c26ce3fd36d5a0f
+	079 	0100 1111 	117 	0x4F 	O - Letter O (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: d1fe173d08e959397adf34b1d77e88d7
+	--SHA1: b74f5ee9461495ba5ca4c72a7108a23904c27a05
+	080 	0101 0000 	120 	0x50 	P - Letter P (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: f033ab37c30201f73f142449d037028d
+	--SHA1: b888b29826bb53dc531437e723738383d8339b56
+	081 	0101 0001 	121 	0x51 	Q - Letter Q (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 43ec517d68b6edd3015b3edc9a11367b
+	--SHA1: 1d513c0bcbe33b2e7440e5e14d0b22ef95c9d673
+	082 	0101 0010 	122 	0x52 	R - Letter R (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 9778d5d219c5080b9a6a17bef029331c
+	--SHA1: 76546f9a641ede2beab506b96df1688d889e629a
+	083 	0101 0011 	123 	0x53 	S - Letter S (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: fe9fc289c3ff0af142b6d3bead98a923
+	--SHA1: 7d7116e23efef7292cad5e6f033d9a962708228c
+	084 	0101 0100 	124 	0x54 	T - Letter T (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 68d30a9594728bc39aa24be94b319d21
+	--SHA1: be461a0cd1fda052a69c3fd94f8cf5f6f86afa34
+	085 	0101 0101 	125 	0x55 	U - Letter U (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 3ef815416f775098fe977004015c6193
+	--SHA1: 1352246e33277e9d3c9090a434fa72cfa6536ae2
+	086 	0101 0110 	126 	0x56 	V - Letter V (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 93db85ed909c13838ff95ccfa94cebd9
+	--SHA1: 3c26dffc8a2e8804dfe2c8a1195cfaa5ef6d0014
+	087 	0101 0111 	127 	0x57 	W - Letter W (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: c7e1249ffc03eb9ded908c236bd1996d
+	--SHA1: e62d7f1eb43d87c202d2f164ba61297e71be80f4
+	088 	0101 1000 	130 	0x58 	X - Letter X (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 2a38a4a9316c49e5a833517c45d31070
+	--SHA1: b37f6ddcefad7e8657837d3177f9ef2462f98acf
+	089 	0101 1001 	131 	0x59 	Y - Letter Y (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 7647966b7343c29048673252e490f736
+	--SHA1: 16b06bd9b738835e2d134fe8d596e9ab0086a985
+	090 	0101 1010 	132 	0x5A 	Z - Letter Z (upper, uppercase) ISO basic Latin alphabet.
+	--MD5: 8613985ec49eb8f757ae6439e879bb2a
+	--SHA1: 2d0c8af807ef45ac17cafb2973d866ba8f38caa9
+	091 	0101 1011 	133 	0x5B 	[ - Left square bracket.
+	--MD5: 54229abfcfa5649e7003b83dd4755294
+	--SHA1: 4cd66dfabbd964f8c6c4414b07cdb45dae692e19
+	092 	0101 1100 	134 	0x5C 	\ - Backslash.
+	--MD5: 92cc227532d17e56e07902b254dfad10
+	--SHA1: 8ee51caaa2c2f4ee2e5b4b7ef5a89db7df1068d7
+	093 	0101 1101 	135 	0x5D 	] - Right square bracket.
+	--MD5: 98dce83da57b0395e163467c9dae521b
+	--SHA1: 08a35293e09f508494096c1c1b3819edb9df50db
+	094 	0101 1110 	136 	0x5E 	^ - Caret.
+	--MD5: f4b9ec30ad9f68f89b29639786cb62ef
+	--SHA1: 215bb47da8fac3342b858ac3db09b033c6c46e0b
+	095 	0101 1111 	137 	0x5F 	_ - Underscore.
+	--MD5: 812b4ba287f5ee0bc9d43bbf5bbe87fb
+	--SHA1: 8e63fd3e77796b102589b1ba1e4441c7982e4132
+	096 	0110 0000 	140 	0x60 	` - Grave accent.
+	--MD5: 26657d5ff9020d2abefe558796b99584
+	--SHA1: 6fb84aed32facd1299ee1e77c8fd2b1a6352669e
+	097 	0110 0001 	141 	0x61 	a - Letter a (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: e2ef524fbf3d9fe611d5a8e90fefdc9c
+	--SHA1: 812ed4562d3211363a7b813aa9cd2cf042b63bb2
+	098 	0110 0010 	142 	0x62 	b - Letter b (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: ed3d2c21991e3bef5e069713af9fa6ca
+	--SHA1: 31bd9b9f5f7b338e41b56183a2f3008b541d7c84
+	099 	0110 0011 	143 	0x63 	c - Letter c (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: ac627ab1ccbdb62ec96e702f07f6425b
+	--SHA1: 9a79be611e0267e1d943da0737c6c51be67865a0
+	100 	0110 0100 	144 	0x64 	d - Letter d (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: f899139df5e1059396431415e770c6dd
+	--SHA1: 310b86e0b62b828562fc91c7be5380a992b2786a
+	101 	0110 0101 	145 	0x65 	e - Letter e (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 38b3eff8baf56627478ec76a704e9b52
+	--SHA1: dbc0f004854457f59fb16ab863a3a1722cef553f
+	102 	0110 0110 	146 	0x66 	f - Letter f (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: ec8956637a99787bd197eacd77acce5e
+	--SHA1: c8306ae139ac98f432932286151dc0ec55580eca
+	103 	0110 0111 	147 	0x67 	g - Letter g (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 6974ce5ac660610b44d9b9fed0ff9548
+	--SHA1: 934385f53d1bd0c1b8493e44d0dfd4c8e88a04bb
+	104 	0110 1000 	150 	0x68 	h - Letter h (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: c9e1074f5b3f9fc8ea15d152add07294
+	--SHA1: 78a8efcbaaa1a9a30f9f327aa89d0b6acaaffb03
+	105 	0110 1001 	151 	0x69 	i - Letter i (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 65b9eea6e1cc6bb9f0cd2a47751a186f
+	--SHA1: e114c448f4ab8554ad14eff3d66dfeb3965ce8fc
+	106 	0110 1010 	152 	0x6A 	j - Letter j (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: f0935e4cd5920aa6c7c996a5ee53a70f
+	--SHA1: 7224f997fc148baa0b7f81c1eda6fcc3fd003db0
+	107 	0110 1011 	153 	0x6B 	k - Letter k (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: a97da629b098b75c294dffdc3e463904
+	--SHA1: 524e05dc77239f3a15dab766aaa59a9e432efde7
+	108 	0110 1100 	154 	0x6C 	l - Letter l (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: a3c65c2974270fd093ee8a9bf8ae7d0b
+	--SHA1: 17503a6b2326f09fbc4e3a7c03874c7333002038
+	109 	0110 1101 	155 	0x6D 	m - Letter m (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 2723d092b63885e0d7c260cc007e8b9d
+	--SHA1: a1422e6a168630cdd214ac5e31ca01ae1bee8d92
+	110 	0110 1110 	156 	0x6E 	n - Letter n (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 5f93f983524def3dca464469d2cf9f3e
+	--SHA1: 5e796e48332af4142b10ca0f86e65d9bfdb05884
+	111 	0110 1111 	157 	0x6F 	o - Letter o (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 698d51a19d8a121ce581499d7b701668
+	--SHA1: 6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2
+	112 	0111 0000 	160 	0x70 	p - Letter p (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 7f6ffaa6bb0b408017b62254211691b5
+	--SHA1: 601ca99d55f00a2e8e736676b606a4d31d374fdd
+	113 	0111 0001 	161 	0x71 	q - Letter q (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 73278a4a86960eeb576a8fd4c9ec6997
+	--SHA1: e993215bfdaa515f6ea00fafc1918f549119f993
+	114 	0111 0010 	162 	0x72 	r - Letter r (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 5fd0b37cd7dbbb00f97ba6ce92bf5add
+	--SHA1: ecb7937db58ec9dea0c47db88463d85e81143032
+	115 	0111 0011 	163 	0x73 	s - Letter s (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 2b44928ae11fb9384c4cf38708677c48
+	--SHA1: efa6e44dfa0145249be273ecd84a97f534b04920
+	116 	0111 0100 	164 	0x74 	t - Letter t (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: c45147dee729311ef5b5c3003946c48f
+	--SHA1: 683e725c03a87baaad2623231644e944e537acab
+	117 	0111 0101 	165 	0x75 	u - Letter u (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: eb160de1de89d9058fcb0b968dbbbd68
+	--SHA1: d0e2dbb0bac1917d360aaf52c01a2a4b669e8cdb
+	118 	0111 0110 	166 	0x76 	v - Letter v (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 5ef059938ba799aaa845e1c2e8a762bd
+	--SHA1: 12f0de3dc76e067d21ed85125716e02e9f1e69f0
+	119 	0111 0111 	167 	0x77 	w - Letter w (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 07e1cd7dca89a1678042477183b7ac3f
+	--SHA1: a2e33d344f272e100d4a8efeabc7ae8a60a8ba7a
+	120 	0111 1000 	170 	0x78 	x - Letter x (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: da4fb5c6e93e74d3df8527599fa62642
+	--SHA1: 775bc5c30e27f0e562115d136e7f7edbd3cead89
+	121 	0111 1001 	171 	0x79 	y - Letter y (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: 4c56ff4ce4aaf9573aa5dff913df997a
+	--SHA1: 8bd7954c40c1e59a900f71ea3a266732609915b1
+	122 	0111 1010 	172 	0x7A 	z - Letter z (lower, lowercase) ISO basic Latin alphabet.
+	--MD5: a0a080f42e6f13b3a2df133f073095dd
+	--SHA1: 05a8ea5382b9fd885261bb3eed0527d1d3b07262
+	123 	0111 1011 	173 	0x7B 	{ - Left curly bracket.
+	--MD5: 202cb962ac59075b964b07152d234b70
+	--SHA1: 40bd001563085fc35165329ea1ff5c5ecbdbbeef
+	124 	0111 1100 	174 	0x7C 	| - Vertical bar.
+	--MD5: c8ffe9a587b126f152ed3d89a146b445
+	--SHA1: f38cfe2e2facbcc742bad63f91ad55637300cb45
+	125 	0111 1101 	175 	0x7D 	} - Right curly bracket.
+	--MD5: 3def184ad8f4755ff269862ea77393dd
+	--SHA1: 0ca9277f91e40054767f69afeb0426711ca0fddd
+	126 	0111 1110 	176 	0x7E 	~ - Tilde symbol, tilde sign.
+	--MD5: 069059b7ef840f0c74a814ec9237b6ec
+	--SHA1: 114d4eefde1dae3983e7a79f04c72feb9a3a7efd
+	127 	0111 1111 	177 	0x7F 	DEL - Delete character. Unicode symbol: ␡
+	--MD5: ec5decca5ed3d6b8079e2e7e7bacc9f2
+	--SHA1: 008451a05e1e7aa32c75119df950d405265e0904

@@ -18,3 +18,8 @@ try
 ```echo -ne admin | md5sum``` 
 
 Remember that 1 byte makes a huge difference in the hash
+
+- If a request spits back html that has hidden values for a user, if changing 
+the Accept: header will make a difference
+  - Example: Accept: text/html => Accept: application/json
+

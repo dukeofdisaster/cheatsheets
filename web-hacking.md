@@ -1,5 +1,6 @@
 # Stuff I've ran into and wanted to note
 - try NON standard verbs over http and see what happens example: pipe.ova
+
 ```
 curl -vX BOB http://192.168.56.104/index.php
 ```
@@ -23,3 +24,18 @@ Remember that 1 byte makes a huge difference in the hash
 the Accept: header will make a difference
   - Example: Accept: text/html => Accept: application/json
 
+## testing for errors /injection
+- tried single quote?
+- tried double quote?
+- tried common statement terminators? ";"
+
+##  Always remember: eval is evil. 
+
+## Ruby command injection
+```
+eval("ruby code here")
+System("os command here")
+`ls -al /`   (backticks contain os command)
+Kernel.exec("os command here")
+open("\| os command here")
+```

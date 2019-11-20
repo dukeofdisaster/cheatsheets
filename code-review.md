@@ -4,6 +4,16 @@ pentest process; this can still be sped up though by keeping in mind common vuln
 
 Good link: https://github.com/OWASP/CheatSheetSeries.git
 
+## Sessions, Sessions, Sessions, cookies, cookies, cookies
+Common denominators on all the code exercises
+
+- no input sanitization (generic)
+- Often using Cookies or sessionIds
+
+### C Sharp
+- Request.Cookies
+- Serializer : review basic xml serializer / deserializer from class
+
 ## DotNet do NOT
 DO NOT: Concatenate strings anywhere in your code and execute them against your database (Known as dynamic sql).
 ```
@@ -35,3 +45,8 @@ id=1') OR SLEEP(25)=0 LIMIT 1--
 id=1)) OR SLEEP(25)=0 LIMIT 1--
 id=SELECT SLEEP(25)--
 ```
+# Javascript
+- How are sessions handled? 
+- Is there a sessionId being passed around?
+- are there any file paths created out of unsanitized, user controlled variables?
+i.e directory traversal?

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import requests
+import urllib
+# common url  encoding: urllib.parse.quote_plus(myb64encodedstringhere)
 
 PROXIES = {'http': 'http://127.0.0.1:8080', 'https': 'https://127.0.0.1:8080' }
 

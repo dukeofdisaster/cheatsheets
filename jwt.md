@@ -1,6 +1,9 @@
 # jwt 
 Jwt.io can be used to generate tokens with a given secret. 
 
+## jwt reading
+https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
+
 ## jwt format
 base64urlencode(json header).base64urlencode(json payload).base64urlencode(signature)
 - note that  base64 != base64urlencoded

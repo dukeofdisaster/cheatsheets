@@ -14,3 +14,5 @@ gpg --verify somefile.iso.sig somefile.iso
 ## WINDOWS GPG
 Download gpg4win
 - https://gpg4win.org/download.html
+
+Run the same commands above

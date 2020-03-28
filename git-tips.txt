@@ -1,29 +1,40 @@
-# create empty repo in the remote you want to push to
+# How to push to a git repo other than github
+## create empty repo in the remote you want to push to
 mkdir myalternate_repo
 cd myalternate_repo
-git init
-  - optionally use: git init --bare
-  - think this is the preferred way IIRC; 
+```
+git init --bare
+```
 
 ## add an alternative remote to push to
+```
 git remote add alt user@server:/path/to/git/repo.git
+```
+- alt is just an arbitrary name for the remote
 
 ## remove an alternative 
+```
 git remote rm alt
+```
 
 ## push to alt 
+```
 git push alt
+```
 
-## bounty: found .git in a url???
+# bug bounty: found .git in a url???
+```
 wget --mirror -I .git TARGET.COM/.git/ 
 cd TARGET.COM/ 
 git status
 git checkout -- .
-  - downloads the remote repo
-  - checks the repo status
-  - restores deleated files
+```
+- downloads the remote repo
+- checks the repo status
+- restores deleated files
 
 ## standard .git/ directories/files
+```
 HEAD 
 branches/
 config
@@ -35,3 +46,4 @@ logs/
 objects/
 packe-refs
 refs/
+```

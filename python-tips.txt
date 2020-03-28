@@ -8,3 +8,5 @@ logging.basicConfig(filename='/var/log/mysweetassscript.log',
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
+# one liner
+echo "Hello moto san this is some text I don't like" | python -c 'import sys,re; s = sys.stdin.read(); s=re.sub("s", "x", s); print s;'

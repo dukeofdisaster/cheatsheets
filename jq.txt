@@ -107,4 +107,5 @@ cat my-json-linefile.txt | jq '.somefieldhere,someotherfieldhere,field3,field4'
 ## pulling indicators out of OTX responses; works on multi-line json
 rooto@box:~/ cat 10-feeds.json | jq -r '.results[] | .indicators[] | .indicator'
 
-
+# extracting industries
+cat 5day.json | jq .results[] | jq .industries

@@ -1,23 +1,23 @@
 # How to push to a git repo other than github
-## create empty repo in the remote you want to push to
+- create empty repo in the remote you want to push to
+```
 mkdir myalternate_repo
 cd myalternate_repo
-```
 git init --bare
 ```
 
-## add an alternative remote to push to
+- add an alternative remote to push to
 ```
 git remote add alt user@server:/path/to/git/repo.git
 ```
-- alt is just an arbitrary name for the remote
+- NOTE: alt is just an arbitrary name for the remote
 
-## remove an alternative 
+- remove an alternative 
 ```
 git remote rm alt
 ```
 
-## push to alt 
+- push to alt 
 ```
 git push alt
 ```
@@ -46,4 +46,13 @@ logs/
 objects/
 packe-refs
 refs/
+```
+
+# Forking and Branches
+AWS Code Commit
+- Console -> Repositories -> Choose Your repository -> Create Branch
+
+Create a Branch in Git
+```
+git checkout -b MyNewBranch
 ```

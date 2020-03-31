@@ -56,3 +56,14 @@ Create a Branch in Git
 ```
 git checkout -b MyNewBranch
 ```
+## Use Case
+There's a repo in codecommit that you've been tasked with creating tests for.
+You clone the repo down then execute the checkout command above. You make changes
+then commit them back to the local branch. Now you have to push them back up to code commit.
+```
+git push origin MyNewBranch
+````
+To switch back to a master repo from a branch
+```
+git checkout master
+```

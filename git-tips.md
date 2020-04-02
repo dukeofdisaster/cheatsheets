@@ -67,3 +67,14 @@ To switch back to a master repo from a branch
 ```
 git checkout master
 ```
+
+# sh keys with github
+After adding your pub key to your github account, check your connection with the following
+```
+ssh -T git@github.com
+The authenticity of host 'github.com (192.30.255.112)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,192.30.255.112' (RSA) to the list of known hosts.
+Hi dukeofdisaster! You've successfully authenticated, but GitHub does not provide shell access.
+```

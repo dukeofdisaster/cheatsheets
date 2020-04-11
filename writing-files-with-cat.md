@@ -1,3 +1,4 @@
+# WRITING FILES WITH CAT
 Sometimes you'll find yourself in a restricted shell that's not fully interactive
 and it will be hard to write files and continue hacking away. This is 
 where knowing some cat magic comes in handy. Check the example below. 
@@ -5,7 +6,8 @@ Note that: EOF is an arbitrary string in the example below that just signals
 the end of input to cat; it could be anything we wanted it to be; the 
 point being that to finish writing whatever we want, we just supply the 
 terminating string and what's done is done. 
-===========================================
+
+```
 user@computer:~$ cat <<EOF>test.txt
 > hello
 > hello
@@ -51,4 +53,5 @@ hello
 test
 test appending to this file
 user@computer:~$ 
+```
 ============================================

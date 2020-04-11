@@ -1,4 +1,4 @@
-# virtualbox management cheat sheet
+# VIRTUALBOX MANAGEMENT CHEAT SHEET
 This cheat sheet covers some useful virtualbox commands for administrating
 virtualbox from cli
 

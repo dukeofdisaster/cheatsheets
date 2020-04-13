@@ -4,6 +4,12 @@
 openssl req -out CSR.csr -new -newkey rsa:2048 -nodes -keyout privateKey.key
 ```
 
+## Headless self-signed cert
+```
+openssl req -subj '/O=My Company Name LTD./C=US/CN=domain.com' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout server.key -out server.crt
+
+openssl req -subj '' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout server.key -out server.crt
+```
 ## Generate self-signed cert
 ```
 openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt

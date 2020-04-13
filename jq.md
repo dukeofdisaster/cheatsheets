@@ -1,17 +1,21 @@
-# jq is an extremely helpful tool for manipulatingn json but it can be a bitch to learn.
-# hopefully this helps
+# JQ TIpS
+jq is an extremely helpful tool for manipulatingn json but it can be a bitch to learn.
 
-# grab only the value of field '_id' from a narray of json object
-# - pipes the json objects to jq, then you select the array of objects '.[]'
-#  and the field '_id' for those objects; dumps a list of the id object
+## grab only the value of field '\_id' from a narray of json object
+- pipes the json objects to jq, then you select the array of objects '.[]'
+and the field '\_id' for those objects; dumps a list of the id object
+```bash
 user@box:~$ cat savedsearches.json | jq '.[]._id'
+```
 
-# cybereason; taking query results and filtering down to individual results
-# from piping the output to jq
-jq '.data.resultIdToElementDataMap[] | .guidString'
+## cybereason; taking query results and filtering down to individual results
+```bash
+cat som_results.json | jq '.data.resultIdToElementDataMap[] | .guidString'
+```
 
 
-# select an outer key with the given value
+## select an outer key with the given value
+```bash
 [root@box ~]# cat /opt/intel/badips.json | jq '.["68.183.156.156"]'
 1569377667
 
@@ -26,15 +30,19 @@ jq '.data.resultIdToElementDataMap[] | .guidString'
   "51.38.124.174": 1569456757,
   "51.75.202.12": 1569456757
 }
+```
 
-
-# Flatten a json object in jq. Can be thrown all on one line
+## Flatten a json object in jq.
+Can be thrown all on one line
+```
 . as $in
 | reduce leaf_paths as $path ({};
      . + { ($path | map(tostring) | join(".")): $in | getpath($path) })
-# also since it's jq we can pipe to it...
-# Normal structure below
+```
+### also since it's jq we can pipe to it...
+Normal structure below
 =========================
+```json
 {
   "timestamp": "2019-09-26T23:42:44.407046+0000",
   "flow_id": 583945044637190,
@@ -71,17 +79,16 @@ jq '.data.resultIdToElementDataMap[] | .guidString'
     "start": "2019-09-26T23:42:44.407046+0000"
   }
 }
-=========================
-
-Command output
-==============================================================
+```
+- Command
+```bash
 [root@centos-digibox ~]# cat /var/log/suricata/eve-alert.json | jq '. as $in | reduce leaf_paths as $path ({}; . + { ( $path | map(tostring) | join(".")): $in | getpath($path) })'
 {
   "timestamp": "2019-09-26T01:29:46.888694+0000",
   "flow_id": 228071697977206,
   "in_iface": "eth0",
   "event_type": "alert",
-  "src_ip": "46.101.246.93",
+  "src_ip": "46.99.100.100",
   "src_port": 22,
   "dest_ip": "0.0.0.0",
   "dest_port": 59970,
@@ -99,13 +106,34 @@ Command output
   "flow.bytes_toclient": 0,
   "flow.start": "2019-09-26T01:29:46.888694+0000"
 }
+```
 
-# selecting multiple fields from an array of json
-# - note: this will only display the values, not the keys
+## selecting multiple fields from an array of json
+- note: this will only display the values, not the keys
+```bash
 cat my-json-linefile.txt | jq '.somefieldhere,someotherfieldhere,field3,field4'
+```
 
 ## pulling indicators out of OTX responses; works on multi-line json
+```bash
 rooto@box:~/ cat 10-feeds.json | jq -r '.results[] | .indicators[] | .indicator'
+```
 
-# extracting industries
+## extracting industries
+```
 cat 5day.json | jq .results[] | jq .industries
+```
+
+## Edit values in an existing file
+- Note this will require some copying because the file isn't modifed, the
+modified json is just sent to stdout
+- Example for use in edit cloud-init (whole string passed to sh -c)
+```
+'jq ".admin_server.listen_url=\"0.0.0.0:3333\"" /opt/some/config.json |  tee /opt/some/tmp.json'
+rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
+```
+- Example for multiple files
+```
+'jq ".admin_server.listen_url=\"0.0.0.0:3333\" | .admin_server.cert=\"/opt/something/dude.crt\"" /opt/some/config.json |  tee /opt/some/tmp.json'
+rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
+```

@@ -11,7 +11,7 @@ for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from'; done > hosts.txt
 for i in {1..254}; do ping -c 1 10.10.10.$i | grep 'from' | awk -F " " '{print $4}'; done
 
 # parallel port scan with parallel, timeout, and nc
-parallel "timeout 0.2 nc -z -v 192.168.0.105 {} 2>&1 | grep open" ::: {1..65535}
+parallel "timeout 0.2 nc -z -v 192.168.0.105 {} 2>&1 | grep succeed" ::: {1..65535}
 
 # same with ncat (for ipv6 support); note the output is different so grep changes
 parallel "timeout 0.2 ncat -z -v dead:beef::250:56ff:fea2:1a06 {} 2>&1 | grep connected" ::: {1..65535}

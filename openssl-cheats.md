@@ -46,3 +46,6 @@ e is 65537 (0x010001)
 ```
 echo 'someb64header.someb64payload' | openssl dgst -sha256 -sign my.priv -binary | openssl base64 | tr -- '+/=' '-_ '
 ```
+
+## inspect a cert
+openssl s_client -showcerts -connect www.somehost.com:443

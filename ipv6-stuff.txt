@@ -1,2 +1,0 @@
-# sniff ipv6 packets with tcpdump
-tcpdump -i eth0 -vv ip6

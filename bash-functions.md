@@ -1,7 +1,7 @@
 # some simple bash functions
 
-Scramble function
-================
+## Scramble function
+```bash
 #!/bin/bash
 function scramble {
   local toScram=$1
@@ -9,6 +9,5 @@ function scramble {
   echo $toScram | rev | base64 -w 0 | rev | base64 -w 0 | rev | base64 -w 0 ; echo
 }
 scramble $1
-
-================
-  Usage: ./scramble.sh SOMESTRINGTOSCRAMBLEHERE
+```
+- usage: ./scramble.sh SOMESTRINGTOSCRAMBLEHERE

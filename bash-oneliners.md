@@ -83,3 +83,12 @@ for i in {1..65535}; do (echo "" > /dev/tcp/192.168.0.5/$i && echo $i)  2>/dev/n
 ```bash
 for n in {1..100}; do dd if=/dev/urandom of=file$(printf %03d "$n").bin bs=1 count=$$(1024*1000)) ; done
 ```
+
+## Get status of file mod by size
+TL;DR you executed an op on a large file (20G) and can't tell status, BUT
+you do know the target size is about 20G, so you can do byte math to
+figure out about how much it's done; 1=100%
+```
+du -b WinDev2009Eval.ova | awk -F " " '{print $1}' | while read i ; do echo $(($i / 1000000000)) | ruby -e 'puts ARGF.read.to_i / 20.0'; done
+```
+- note it's not 100 percent accurate either

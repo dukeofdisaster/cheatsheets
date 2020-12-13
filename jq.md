@@ -137,3 +137,37 @@ rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
 'jq ".admin_server.listen_url=\"0.0.0.0:3333\" | .admin_server.cert=\"/opt/something/dude.crt\"" /opt/some/config.json |  tee /opt/some/tmp.json'
 rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
 ```
+
+## Selecting only keys; i.e. like python .keys()
+- good when trying to model large json objects
+```
+$ cat node-stats.json | jq keys
+[
+  "ephemeral_id",
+  "events",
+  "host",
+  "http_address",
+  "id",
+  "jvm",
+  "name",
+  "os",
+  "pipeline",
+  "pipelines",
+  "process",
+  "queue",
+  "reloads",
+  "snapshot",
+  "status",
+  "version"
+]
+```
+- to select keys of a nested object, just pipe to keys
+```
+$ cat node-stats.json | jq '.jvm | keys'
+[
+  "gc",
+  "mem",
+  "threads",
+  "uptime_in_millis"
+]
+```

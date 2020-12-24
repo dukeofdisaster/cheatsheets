@@ -140,7 +140,7 @@ rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
 
 ## Selecting only keys; i.e. like python .keys()
 - good when trying to model large json objects
-```
+```bash
 $ cat node-stats.json | jq keys
 [
   "ephemeral_id",
@@ -162,7 +162,7 @@ $ cat node-stats.json | jq keys
 ]
 ```
 - to select keys of a nested object, just pipe to keys
-```
+```bash
 $ cat node-stats.json | jq '.jvm | keys'
 [
   "gc",

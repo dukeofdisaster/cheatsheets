@@ -1,42 +1,31 @@
 # Ronnie Flathers – @ropnop - Troopers 2019
+- Better understanding of underlying technologies/protocols
+- More tricks for your pentester bag
+- Will contain multiple demos/screenshots/examples
+- Multiple ways to skin a cat
+- May not always be the “best” or stealthiest way – but gives you options!
+- dig
+- nslookup
+- MS-RPC
+- Samba
+- Python - Impacket (my favorite)
+- LDAP
+- openldap
+- ldapsearch
+- Kerberos
+- Heimdal Kerberos
+- MIT Kerberos
 
+## Find Active Directory through DNS
 
-
-• Better understanding of underlying technologies/protocols
-• More tricks for your pentester bag
-• Will contain multiple demos/screenshots/examples
-
-• Multiple ways to skin a cat
-• May not always be the “best” or stealthiest way – but gives you options!
-
-• dig
-• nslookup
-
-• MS-RPC
-• Samba
-• Python - Impacket (my favorite)
-
-• LDAP
-
-• openldap
-• ldapsearch
-
-• Kerberos
-
-• Heimdal Kerberos
-• MIT Kerberos
-
-9
-
-Find Active Directory through DNS
-
-• AD-DS relies heavily on DNS, especially SRV records for service 
+- AD-DS relies heavily on DNS, especially SRV records for service 
 discovery. Most useful and common ones:
-• _gc._tcp – global catalog (LDAP for entire forest)
-• _ldap._tcp – ldap servers
-• _kerberos._tcp – Kerberos KDC
-• _kpasswd._tcp – Kerberos password change server
+- _gc._tcp – global catalog (LDAP for entire forest)
+- _ldap._tcp – ldap servers
+- _kerberos._tcp – Kerberos KDC
+- _kpasswd._tcp – Kerberos password change server
 
+```
 dig -t SRV _gc._tcp.lab.ropnop.com
 dig -t SRV _ldap._tcp.lab.ropnop.com
 dig -t SRV _kerberos._tcp.lab.ropnop.com
@@ -44,6 +33,7 @@ dig -t SRV _kpasswd._tcp.lab.ropnop.com
 
 
 nmap --script dns-srv-enum --script-args “dns-srv-enum.domain=‘lab.ropnop.com’”
+```
 
 Domain Meta-Data Through LDAP
 ================================
@@ -75,89 +65,78 @@ Value
 6
 7
 
-Example, snipped output
-
-• Default naming context
-• DN of server
-• Domain Functionality Level
-
+## Example, snipped output
+- Default naming context
+- DN of server
+- Domain Functionality Level
 https://serverfault.com/a/512292
 
-Communicating with MS-RPC
-• Although proprietary, there are other implementations and you don’t 
+## Communicating with MS-RPC
+- Although proprietary, there are other implementations and you don’t 
 need Windows to talk MS-RPC
+- Samba
+- rpcclient
+- smbclient
+- net
+- https://www.samba.org/samba/docs/current/man-html/
+- Impacket
+- Python implementation of the 
+- Amazing library and suite of tools
 
-• Samba
-
-• rpcclient
-• smbclient
-• net
-• https://www.samba.org/samba/do
-
-cs/current/man-html/
-
-• Impacket
-
-• Python implementation of the 
-
-• Amazing library and suite of tools
-
-MS-RPC stack
-• examples/
-
-• https://github.com/CoreSecurity
+## MS-RPC stack
+- examples/
+- https://github.com/CoreSecurity
 
 MS-RPC Protocols
-• When you have local admin privileges on the target, RPC calls can be 
+- When you have local admin privileges on the target, RPC calls can be 
 used to execute code:
-• svcctl - remotely create/start/stop services (psexec)
-• atsvc - remotely create tasks
-• DCOM - Remote COM access (wmiexec, mmcexec)
+- svcctl - remotely create/start/stop services (psexec)
+- atsvc - remotely create tasks
+- DCOM - Remote COM access (wmiexec, mmcexec)
 
-• Impacket:
-
-• psexec.py, wmiexec.py, atexec.py, dcomexec.py
+- Impacket:
+  - psexec.py, wmiexec.py, atexec.py, dcomexec.py
 
 Impacket
-• Impacket is the swiss army knife 
+- Impacket is the swiss army knife 
 for Windows network pentesting
-• Dependencies can be difficult
+- Dependencies can be difficult
 
 https://github.com/ropnop/impacket_static_binaries
 
 Active Directory uses LDAP
-• LDAP is the underlying directory access protocol in AD
-• Every object exists in the LDAP “database”
+- LDAP is the underlying directory access protocol in AD
+- Every object exists in the LDAP “database”
 
 Every DC communicates 
 on 3 ports for LDAP by 
 default:
-• 389 - LDAP
-• 636 - LDAPS (SSL)
-• 3269 - LDAP Global 
+- 389 - LDAP
+- 636 - LDAPS (SSL)
+- 3269 - LDAP Global 
 
 
-• Every object in LDAP has a “Distinguished Name”
-• the “path” where it exists
-• Every object (user, group, computer, etc) has a DN
+- Every object in LDAP has a “Distinguished Name”
+- the “path” where it exists
+- Every object (user, group, computer, etc) has a DN
 
-• CN=Trevor Hoffman,OU=users,OU=LAB,DC=lab,DC=ropnop,DC=com
-• LDAP is hierarchical
-• The domain name
-• lab.ropnop.com à DC=lab,DC=ropnop,DC=com
+- CN=Trevor Hoffman,OU=users,OU=LAB,DC=lab,DC=ropnop,DC=com
+- LDAP is hierarchical
+- The domain name
+- lab.ropnop.com à DC=lab,DC=ropnop,DC=com
 
-• DC - Domain Component
+- DC - Domain Component
 
-• OU - Organizational Unit
+- OU - Organizational Unit
 
-• “folders”
-• Not standard - up to administrator to organize
+- “folders”
+- Not standard - up to administrator to organize
 
-• CN - Common Name
+- CN - Common Name
 
-• The name given to the object (Username, Group name, Computer name, etc)
+- The name given to the object (Username, Group name, Computer name, etc)
 
-• Each DN has multiple attributes. Some default, some can be custom. Lots 
+- Each DN has multiple attributes. Some default, some can be custom. Lots 
 of special attributes for AD
 
 23
@@ -194,25 +173,25 @@ lastLogonTimestamp: 131681480460356324
 The LDAP entry for the AD 
 user: thoffman
 
-• Contains all the info for 
+- Contains all the info for 
 
 the user
 
-• Personal info
-• Groups
-• GUID / SID
-•
+- Personal info
+- Groups
+- GUID / SID
+-
 Logon info
 
-•
+-
 
 LDAP entries also exist for:
 
-• Groups
-• Computers
-• GPOs
+- Groups
+- Computers
+- GPOs
 
-• All of this is available via 
+- All of this is available via 
 
 LDAP queries
 
@@ -220,16 +199,16 @@ LDAP queries
 
 Example ldapsearch query
 
-• h - IP address
+- h - IP address
 
-• LLL - shorten output, remove comments and version
-• x - simple authentication (password)
-• H - hostname with protocol
-• D - bind dn
-• w - password
-• b - base to search from
+- LLL - shorten output, remove comments and version
+- x - simple authentication (password)
+- H - hostname with protocol
+- D - bind dn
+- w - password
+- b - base to search from
 
-• Windows userPrincipalNames are acceptable!
+- Windows userPrincipalNames are acceptable!
 
 Basic ldapsearch syntax:
 ldapsearch <bind 
@@ -240,32 +219,32 @@ filter> <attributes>
 On Windows and like GUIs? AD Explorer: https://docs.microsoft.com/en-us/sysinternals/downloads/adexplorer
 
 LDAP Objects
-• You can query pretty much any AD object through LDAP
+- You can query pretty much any AD object through LDAP
 
-• LDAP objectClasses:
+- LDAP objectClasses:
 
-• user
-• computer
-• group
-• groupPolicyContainer (GPOs!)
-• subnets, dhcp, dns zones, domains, services, etc
+- user
+- computer
+- group
+- groupPolicyContainer (GPOs!)
+- subnets, dhcp, dns zones, domains, services, etc
 
-• Use adexplorer.exe to find other things to search for!
+- Use adexplorer.exe to find other things to search for!
 
 26
 
 ldapsearch - Users
-• “(objectClass=user)”
-• Interesting attributes:
+- “(objectClass=user)”
+- Interesting attributes:
 
-• sAMAccountName
-• userPrincipalName
-• memberOf (groups)
-• badPwdCount (failed logins)
-• lastLogoff (timestamp)
-• lastLogon (timestamp)
-• pwdLastSet (timestamp)
-• logonCount
+- sAMAccountName
+- userPrincipalName
+- memberOf (groups)
+- badPwdCount (failed logins)
+- lastLogoff (timestamp)
+- lastLogon (timestamp)
+- pwdLastSet (timestamp)
+- logonCount
 
 Convert AD LDAP timestamps to human readable:
 $ date -d "1970-01-01 $((($lastLogon/10000000)-
@@ -274,27 +253,27 @@ $ date -d "1970-01-01 $((($lastLogon/10000000)-
 http://meinit.nl/convert-active-directory-lastlogon-time-to-unix-readable-time
 
 ldapsearch - Groups
-• “(objectClass=group)”
-• Interesting attributes:
-• cn (Common Name)
-• member (one per user/group)
-• memberOf (if nested in another group)
+- “(objectClass=group)”
+- Interesting attributes:
+- cn (Common Name)
+- member (one per user/group)
+- memberOf (if nested in another group)
 
 28
 
-ldapsearch - Computers
-• “(objectClass=computer)”
-• Interesting attributes:
-• name (NetBIOS Name)
-• dNSHostName (FQDN)
-• operatingSystem
-• operatingSystemVersion (patch level!)
-• lastLogonTimestamp
-• servicePrincipalName (running services)
+ldapsearch - Computers
+- “(objectClass=computer)”
+- Interesting attributes:
+- name (NetBIOS Name)
+- dNSHostName (FQDN)
+- operatingSystem
+- operatingSystemVersion (patch level!)
+- lastLogonTimestamp
+- servicePrincipalName (running services)
 
-• e.g. TERMSRV, HTTP, MSSQL
+- e.g. TERMSRV, HTTP, MSSQL
 
-• Combine dNSHostName with forward DNS lookups, you 
+- Combine dNSHostName with forward DNS lookups, you 
 
 can enumerate every IP address in the domain w/o 
 scanning!
@@ -321,12 +300,12 @@ the paging option:
 -E pr=1000/noprompt
 
 Nested Lookups
-• Microsoft added some useful “extensions” to LDAP through OIDs
-• “LDAP_MATCHING_RULE_IN_CHAIN” can perform recursive lookups
+- Microsoft added some useful “extensions” to LDAP through OIDs
+- “LDAP_MATCHING_RULE_IN_CHAIN” can perform recursive lookups
 
-• OID: 1.2.840.113556.1.4.1941
+- OID: 1.2.840.113556.1.4.1941
 
-• Chain that with memberOf to get nested memberships for 
+- Chain that with memberOf to get nested memberships for 
 users/groups!
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
@@ -345,28 +324,28 @@ there’s actually 13!
 
 
 Admin-Count
-• Custom Windows AD attribute:
+- Custom Windows AD attribute:
 
-• “Indicates that a given object has had its ACLs changed to a more secure value by the system 
+- “Indicates that a given object has had its ACLs changed to a more secure value by the system 
 
 because it was a member of one of the administrative groups (directly or transitively).”
 
-• adminCount = 1
-• Admin object!
+- adminCount = 1
+- Admin object!
 
-• Easy to filter on J
+- Easy to filter on J
 
 https://msdn.microsoft.com/en-us/library/ms675212(v=vs.85).aspx
 
 Other Fun LDAP Queries with OIDs
-• Find User Objects w/ SPNs (for Kerberoasting)
+- Find User Objects w/ SPNs (for Kerberoasting)
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
 "dc=lab,dc=ropnop,dc=com“ 
 "(&(&(servicePrincipalName=*)(UserAccountControl:1.2.840.113556.1.4.803:=512))(!(Us
 erAccountControl:1.2.840.113556.1.4.803:=2)))"
 
-• Find users and computers with unconstrained delegation
+- Find users and computers with unconstrained delegation
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
 "dc=lab,dc=ropnop,dc=com" 
@@ -381,15 +360,15 @@ https://blogs.technet.microsoft.com/pie/2017/06/30/credential-theft-made-easy-wi
 
 35
 
-Other Fun LDAP Queries
-• Computers with Protocol Transition
+Other Fun LDAP Queries
+- Computers with Protocol Transition
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
 "dc=lab,dc=ropnop,dc=com“ 
 "(&(objectCategory=computer)(objectClass=computer)(userAccountControl:1.2.840.113556.1.4.80
 3:=16777216))"
 
-• Find GPO names and locations
+- Find GPO names and locations
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -w 
 Summer2017 -b 
@@ -397,55 +376,55 @@ dc=lab,dc=ropnop,dc=com "objectClass=groupPolicyContainer" displayName gPCFileSy
 
 36
 
-Why do it manually?
-• Pain to remember all the 
+Why do it manually?
+- Pain to remember all the 
 ldapsearch syntax
-• I wrote WindapSearch to 
+- I wrote WindapSearch to 
 automate common AD 
 LDAP lookups using Python
-• https://github.com/ropnop/
+- https://github.com/ropnop/
 
 windapsearch
 
 37
 
-38
+38
 
-39
+39
 
-LDAP Summary
-• LDAP is the “source of truth” for objects in an AD Domain
-• Multiple ways to query LDAP (it’s an open protocol)
-• As long as you have any valid account, run LDAP queries from 
+LDAP Summary
+- LDAP is the “source of truth” for objects in an AD Domain
+- Multiple ways to query LDAP (it’s an open protocol)
+- As long as you have any valid account, run LDAP queries from 
 wherever you have network access and map out the entire domain
-• Potentially stealthier? Some tools flag sensitive remote RPC calls but 
+- Potentially stealthier? Some tools flag sensitive remote RPC calls but 
 ignore LDAP
 
-• Have more useful LDAP queries? PRs welcome to windapsearch J
+- Have more useful LDAP queries? PRs welcome to windapsearch J
 
 40
 
-Fun with Kerberos
+Fun with Kerberos
 
 Intro and Set Up
 
 41
 
-Kerberos Crash-Course
-• Kerberos can seem crazy 
+Kerberos Crash-Course
+- Kerberos can seem crazy 
 complicated, but it’s “just” 
 SSO (the OG SSO)
-• For you webapp people, it’s 
+- For you webapp people, it’s 
 
 like SAML or OpenID
 
-• Authenticate once to a 
+- Authenticate once to a 
 trusted source (KDC)
-• Don’t need to send password 
+- Don’t need to send password 
 
 to every resource
 
-• KDC delegates access
+- KDC delegates access
 
 https://docs.microsoft.com/en-us/previous-
 versions/windows/it-pro/windows-server-
@@ -455,30 +434,30 @@ Great explanation of AD Kerberos: https://adsecurity.org/?p=227
 
 42
 
-Kerberos Crash-Course
-• Domain Controller = KDC (AS + TGS)
-• Authenticate to AS (the SSO portal) 
+Kerberos Crash-Course
+- Domain Controller = KDC (AS + TGS)
+- Authenticate to AS (the SSO portal) 
 
 with your password
 
-• Get a Ticket Granting Ticket (TGT) (a la 
+- Get a Ticket Granting Ticket (TGT) (a la 
 
 session cookie)
 
-• Request log in to a service (SRV01)
+- Request log in to a service (SRV01)
 
-• SRV01 “redirects” you to KDC
-• Show TGT to KDC – I’m already 
-• KDC gives you TGS for SRV01
+- SRV01 “redirects” you to KDC
+- Show TGT to KDC – I’m already 
+- KDC gives you TGS for SRV01
 
 authenticated
 
-• “Redirect” to SRV01
+- “Redirect” to SRV01
 
-• Show service ticket to SRV01
-• SRV01 verifies/trusts service ticket
-• Service ticket has all my information
-• SRV01 logs me in
+- Show service ticket to SRV01
+- SRV01 verifies/trusts service ticket
+- Service ticket has all my information
+- SRV01 logs me in
 
 https://docs.microsoft.com/en-us/previous-
 versions/windows/it-pro/windows-server-
@@ -488,7 +467,7 @@ Great explanation of AD Kerberos: https://adsecurity.org/?p=227
 
 43
 
-What does Kerberos look like?
+What does Kerberos look like?
 
 Windows does A LOT behind the 
 scenes to make this as seamless as it 
@@ -496,7 +475,7 @@ feels
 
 44
 
-What does Kerberos look like?
+What does Kerberos look like?
 
 Windows does A LOT behind the 
 scenes to make this as seamless as it 
@@ -504,7 +483,7 @@ feels
 
 45
 
-What does Kerberos look like?
+What does Kerberos look like?
 
 klist shows your current Kerberos 
 ticket cache
@@ -519,46 +498,46 @@ hosts
 
 46
 
-Kerberos and Authorization
+Kerberos and Authorization
 
-• Kerberos is an authentication protocol, not authorization
+- Kerberos is an authentication protocol, not authorization
 
-• Only validates who you are, not whether you should access a resource or not
+- Only validates who you are, not whether you should access a resource or not
 
-• You will always get a TGS to access a service (e.g. cifs/SRV01)
+- You will always get a TGS to access a service (e.g. cifs/SRV01)
 
-• It’s up to SRV01 to check whether you should actually be able to
+- It’s up to SRV01 to check whether you should actually be able to
 
-• How? Each TGT and TGS contains a Privileged Attribute Certificate 
+- How? Each TGT and TGS contains a Privileged Attribute Certificate 
 (PAC)
-• Windows addition to Kerberos
-• PAC contains (among other things) all the groups the user is a part of
+- Windows addition to Kerberos
+- PAC contains (among other things) all the groups the user is a part of
 
 47
 
-Kerberos from Linux
-• Everything we’ve done previously from Kali has been using NTLM 
+Kerberos from Linux
+- Everything we’ve done previously from Kali has been using NTLM 
 Authentication
-• Challenge / response authentication using the user’s NT hash
-• Uses NTLMSSP and communicates with DC over NetrLogon (RPC)
+- Challenge / response authentication using the user’s NT hash
+- Uses NTLMSSP and communicates with DC over NetrLogon (RPC)
 
-• But Linux can speak Kerberos too, and Windows is compatible
-• To speak Kerberos, need a few things:
-• apt-get install heimdal-clients
+- But Linux can speak Kerberos too, and Windows is compatible
+- To speak Kerberos, need a few things:
+- apt-get install heimdal-clients
 
-• Kerberos package
+- Kerberos package
 
-• Configuration information
+- Configuration information
 
-• KDC, Realm, etc
+- KDC, Realm, etc
 
-• DNS
-• Synced time
+- DNS
+- Synced time
 
 48
 
-Setting up Kerberos
-• Must add Windows AD realm to /etc/krb5.conf
+Setting up Kerberos
+- Must add Windows AD realm to /etc/krb5.conf
 [libdefaults]                                                                                     
 
 default_realm = LAB.ROPNOP.COM
@@ -585,218 +564,218 @@ out through DNS SRV records
 
 49
 
-Setting up Kerberos
-• DNS must be properly configured!
+Setting up Kerberos
+- DNS must be properly configured!
 
-• Point /etc/resolv.conf to the Domain Controller
+- Point /etc/resolv.conf to the Domain Controller
 
-• Time must also be in sync!
+- Time must also be in sync!
 
-• Can use rdate to sync Kali’s time with the DC
+- Can use rdate to sync Kali’s time with the DC
 
-• apt-get install rdate
-• rdate -n <domain controller>
+- apt-get install rdate
+- rdate -n <domain controller>
 
-• Note: VM tools and NTP service can screw with time sync
+- Note: VM tools and NTP service can screw with time sync
 
 50
 
-Get a TGT - kinit
-• kinit is used to check out a TGT from the KDC
-• klist will list current tickets
-• If all is configured well, you will get a TGT from the Domain Controller
+Get a TGT - kinit
+- kinit is used to check out a TGT from the KDC
+- klist will list current tickets
+- If all is configured well, you will get a TGT from the Domain Controller
 
-• kinit user@REALM
+- kinit user@REALM
 
 51
 
-Using Kerberos
-• Now any tool that supports Kerberos auth can be used with your 
+Using Kerberos
+- Now any tool that supports Kerberos auth can be used with your 
 cache
-• Look in man pages and help
-• GSSAPI = Kerberos
+- Look in man pages and help
+- GSSAPI = Kerberos
 
-• Auth mechanism that Kerberos 5 uses
+- Auth mechanism that Kerberos 5 uses
 
-• Most tools use environment variable KRB5CCNAME to point to 
+- Most tools use environment variable KRB5CCNAME to point to 
 current cache
-• If not set automatically, export KRB5CCNAME=/tmp/krb5cc_0
+- If not set automatically, export KRB5CCNAME=/tmp/krb5cc_0
 
 52
 
-Using Kerberos with GSSAPI
-• smbclient
+Using Kerberos with GSSAPI
+- smbclient
 
 53
 
-Using Kerberos with GSSAPI
-• smbclient
+Using Kerberos with GSSAPI
+- smbclient
 
-• rpcclient
+- rpcclient
 
 54
 
-Using Kerberos with GSSAPI
-• ldapsearch
+Using Kerberos with GSSAPI
+- ldapsearch
 
-• Requires reverse DNS to be working (or manual /etc/hosts entry)
+- Requires reverse DNS to be working (or manual /etc/hosts entry)
 
 55
 
-Viewing Kerberos Tickets
-• Looking at klist, we can see Heimdal Kerberos is checking out TGSs for 
+Viewing Kerberos Tickets
+- Looking at klist, we can see Heimdal Kerberos is checking out TGSs for 
 each service we want
 
 56
 
-Using Kerberos with Impacket
-• All the Impacket scripts support Kerberos authentication as well
+Using Kerberos with Impacket
+- All the Impacket scripts support Kerberos authentication as well
 
-• -k -no-pass (with valid CCACHE)
-• Can also just do –k and supply password
-• must specify host as FQDN and user as realm/user
+- -k -no-pass (with valid CCACHE)
+- Can also just do –k and supply password
+- must specify host as FQDN and user as realm/user
 
 57
 
-Using Kerberos with Impacket
-• All the Impacket scripts support Kerberos authentication as well
+Using Kerberos with Impacket
+- All the Impacket scripts support Kerberos authentication as well
 
-• -k -no-pass (with valid CCACHE)
-• Can also just do –k and supply password
-• must specify host as FQDN and user as realm/user
+- -k -no-pass (with valid CCACHE)
+- Can also just do –k and supply password
+- must specify host as FQDN and user as realm/user
 
 Note: Impacket scripts will not save TGSs in CCACHE
 
 58
 
-Using Kerberos with Impacket
-• All the Impacket scripts support Kerberos authentication as well
+Using Kerberos with Impacket
+- All the Impacket scripts support Kerberos authentication as well
 
-• -k -no-pass (with valid CCACHE)
-• Can also just do –k and supply password
-• must specify host as FQDN and user as realm/user
+- -k -no-pass (with valid CCACHE)
+- Can also just do –k and supply password
+- must specify host as FQDN and user as realm/user
 
 Note: Impacket scripts will not save TGSs in CCACHE
 
 59
 
-When NTLM Auth is disabled
-• Some orgs have fully disabled (read: tried) NTLM and rely solely on Kerberos
+When NTLM Auth is disabled
+- Some orgs have fully disabled (read: tried) NTLM and rely solely on Kerberos
 
-• Rare - it’s very hard to do
+- Rare - it’s very hard to do
 
-• A lot of pentest tools don’t operate well in these environments
+- A lot of pentest tools don’t operate well in these environments
 
-• Metasploit, CrackMapExec, etc
-• They rely on usernames/passwords or NT hashes (pass-the-hash)
-• If you have a password, you can always do Kerberos auth
+- Metasploit, CrackMapExec, etc
+- They rely on usernames/passwords or NT hashes (pass-the-hash)
+- If you have a password, you can always do Kerberos auth
 
-• Just exchange the password for a TGT!
-• Can also “overpass-the-hash” - more on this later
+- Just exchange the password for a TGT!
+- Can also “overpass-the-hash” - more on this later
 
 60
 
-NTLM Auth Disabled
+NTLM Auth Disabled
 
 SMB Error “STATUS_NOT_SUPPORTED” = NTLM Auth Not Supported
 Try Kerberos!
 
 61
 
-Password Guessing
+Password Guessing
 
 Because someone, somewhere is always using Password123
 
 62
 
-Password Guessing
-• Bruteforcing passwords in AD is generally tough
+Password Guessing
+- Bruteforcing passwords in AD is generally tough
 
-• Most domains have a lockout policy - 3 failed attempts à account locked
+- Most domains have a lockout policy - 3 failed attempts à account locked
 
-• Really noisy
+- Really noisy
 
-• Window security events are logged for every failed login attempt
+- Window security events are logged for every failed login attempt
 
-• Pretty slow
+- Pretty slow
 
 attempt
 
-• Usually tries SMB and has to set up and tear down a connection every 
+- Usually tries SMB and has to set up and tear down a connection every 
 
-• Horizontal bruteforcing (spraying) is a better approach
+- Horizontal bruteforcing (spraying) is a better approach
 
-• Choose 1 or 2 common passwords, test them for every domain user
-• Spring2019 or Company123
+- Choose 1 or 2 common passwords, test them for every domain user
+- Spring2019 or Company123
 
 63
 
-Password Spraying with SMB / RPC
-• Realllllllyyyy noisy
+Password Spraying with SMB / RPC
+- Realllllllyyyy noisy
 
 All this traffic to test just one login
 To test ~1700, took about 5 mins
 
 64
 
-Password Spraying with SMB / RPC
+Password Spraying with SMB / RPC
 
-• Generates a security event 
+- Generates a security event 
 every failed attempt
 
-• Event ID 4625
-• “Account Failed to Logon”
+- Event ID 4625
+- “Account Failed to Logon”
 
 https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4625
 
 65
 
-Other Password Guessing Techniques
-• NETLOGON is inefficient (e.g. SMB, rpcclient)
-• RDP is slow and just as noisy
-• LDAP binds are faster, but still result in event 4625
+Other Password Guessing Techniques
+- NETLOGON is inefficient (e.g. SMB, rpcclient)
+- RDP is slow and just as noisy
+- LDAP binds are faster, but still result in event 4625
 
-• But what happens here?
+- But what happens here?
 
 66
 
-Password Guessing with Kerberos
+Password Guessing with Kerberos
 
-• Only 2 frames to check password!
-• And it’s UDP - no TCP overhead J
+- Only 2 frames to check password!
+- And it’s UDP - no TCP overhead J
 
 67
 
-Bash + kinit = poor mans bruteforcer
+Bash + kinit = poor mans bruteforcer
 
-• Just looping through usernames 
+- Just looping through usernames 
 with kinit can be pretty effective
 
-• Scripts here:
+- Scripts here:
 
-• https://github.com/ropnop/kerberos_
+- https://github.com/ropnop/kerberos_
 
 windows_scripts
 
-• But it requires a Kerberos client 
+- But it requires a Kerberos client 
 installed, and it could even be 
 faster with multi-threading….
 
 68
 
-Introducing: Kerbrute
+Introducing: Kerbrute
 
-• Written in Go
+- Written in Go
 
-• Completely cross platform/arch
-• Static binaries (no dependencies)
+- Completely cross platform/arch
+- Static binaries (no dependencies)
 
-• Multi threaded (very fast)
-• Auto lookup KDC information
-• Three main functionalities (for now):
-• userenum – enum valid accounts
-• passwordspray – horizontal bruteforce
-• bruteuser – traditional bruteforcer
+- Multi threaded (very fast)
+- Auto lookup KDC information
+- Three main functionalities (for now):
+- userenum – enum valid accounts
+- passwordspray – horizontal bruteforce
+- bruteuser – traditional bruteforcer
 
 Note: failed Kerberos pre-authentication does 
 count against lockout threshold
@@ -805,40 +784,40 @@ Get the latest binaries here: https://github.com/ropnop/kerbrute/releases/latest
 
 69
 
-70
+70
 
-71
+71
 
-72
+72
 
-Kerbrute – User Enumeration
+Kerbrute – User Enumeration
 
 73
 
-Kerbrute – Brute Force
+Kerbrute – Brute Force
 
 When you’re SURE there’s no lock out policy....
 
 74
 
-Kerbrute – Cross Platform
+Kerbrute – Cross Platform
 
 75
 
-What about logs?
-• Had a major WTF moment when I went to look at logs after spraying 
+What about logs?
+- Had a major WTF moment when I went to look at logs after spraying 
 10000s failed Kerberos attempts for several minutes
 
 Where are the failures?!
 
 76
 
-Kerberos Event Logging
-• Turns out failing Kerberos pre-authentication does not trigger a Logon 
+Kerberos Event Logging
+- Turns out failing Kerberos pre-authentication does not trigger a Logon 
 failure event (4625)
 
-• Have to manually specify event logging for Kerberos (which is in a different location)
-• If you’re only logging on traditional “Logon failures” - you’d miss this!
+- Have to manually specify event logging for Kerberos (which is in a different location)
+- If you’re only logging on traditional “Logon failures” - you’d miss this!
 
 Does not catch Kerberos pre-auth failures
 
@@ -846,10 +825,10 @@ Have to enable these as well
 
 77
 
-Kerberos Event Logging
-• There they are!
-• Event 4771 (Kerberos pre-authentication failure)
-• Event 4768 (Kerberos TGT requested) – doesn’t count towards lockout
+Kerberos Event Logging
+- There they are!
+- Event 4771 (Kerberos pre-authentication failure)
+- Event 4768 (Kerberos TGT requested) – doesn’t count towards lockout
 
 In summary: Kerberos pre-auth is a MUCH faster, and potentially stealthier way to password brute force
 
@@ -857,60 +836,60 @@ https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?even
 
 78
 
-More Kerberos Fun
+More Kerberos Fun
 
 Priv Esc, Dealing with Hashes
 
 79
 
-Service Principal Names
-• Service Principal Names (SPNs) are used in AD to tie services into 
+Service Principal Names
+- Service Principal Names (SPNs) are used in AD to tie services into 
 Kerberos authentication
-• As opposed to User Principal Names (UPNs) which are tied to users
-• Common SPN directory: http://adsecurity.org/?page_id=183
+- As opposed to User Principal Names (UPNs) which are tied to users
+- Common SPN directory: http://adsecurity.org/?page_id=183
 
-• SPNs can help identify running services on an AD domain w/o the 
+- SPNs can help identify running services on an AD domain w/o the 
 need for network scanning
-• Can be queried through LDAP:
+- Can be queried through LDAP:
 
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
 "dc=lab,dc=ropnop,dc=com" "servicePrincipalName=*" sAMAccountName servicePrincipalName
 
 80
 
-Requesting TGS for SPN
-• Through Kerberos, you can request a TGS for a SPN
+Requesting TGS for SPN
+- Through Kerberos, you can request a TGS for a SPN
 
-• That’s what they’re designed for
-• E.g. to access RDP, use TGT to request TGS for TERMSRV/PDC01
+- That’s what they’re designed for
+- E.g. to access RDP, use TGT to request TGS for TERMSRV/PDC01
 
-• The TGS is encrypted with the SPN owner’s NTLM password hash
+- The TGS is encrypted with the SPN owner’s NTLM password hash
 
-• It’s possible to crack TGS offline!
-• But cracking a TGS for a service SPN is generally useless
-• …unless the SPN is tied to a user account!
+- It’s possible to crack TGS offline!
+- But cracking a TGS for a service SPN is generally useless
+- …unless the SPN is tied to a user account!
 
-• For service accounts, it’s common to set SPNs to user accounts
+- For service accounts, it’s common to set SPNs to user accounts
 
-• The TGS is then encrypted with the user’s NTLM password hash
+- The TGS is then encrypted with the user’s NTLM password hash
 
-• Called “Kerberoasting” and presented by Tim Medin at Derbycon 2015
+- Called “Kerberoasting” and presented by Tim Medin at Derbycon 2015
 
 Great explanation: https://adsecurity.org/?p=2293
 
 81
 
-Kerberoasting
-• Requires a valid domain account
-• Three step process
+Kerberoasting
+- Requires a valid domain account
+- Three step process
 
-• Find SPNs tied to user accounts through LDAP (i.e. service accounts)
-• Request a TGS for each SPN
-• Crack the TGS offline to recover the service account’s password
+- Find SPNs tied to user accounts through LDAP (i.e. service accounts)
+- Request a TGS for each SPN
+- Crack the TGS offline to recover the service account’s password
 
-• Impacket makes this easy with GetUserSPNs.py
+- Impacket makes this easy with GetUserSPNs.py
 
-• Will automatically LDAP query, then request and save TGS in JtR/Hashcat
+- Will automatically LDAP query, then request and save TGS in JtR/Hashcat
 
 format J
 
@@ -920,12 +899,12 @@ Just needs full domain name, will look up the rest
 
 82
 
-GetUserSPNs.py
+GetUserSPNs.py
 
 83
 
-Cracking TGS Resp
-• Hashcat mode 13100
+Cracking TGS Resp
+- Hashcat mode 13100
 hashcat -m 13100 --force 
 
 txt
@@ -940,33 +919,33 @@ DA privileges!
 
 84
 
-Over Pass the Hash
-• Passwords are great, but sometimes all we have is a hash
+Over Pass the Hash
+- Passwords are great, but sometimes all we have is a hash
 
-• For NTLM auth, pass-the-hash works great*!
+- For NTLM auth, pass-the-hash works great*!
 
-• How can you do Kerberos auth without a password?
+- How can you do Kerberos auth without a password?
 
-• The AS Request to get a TGT doesn’t actually use the password directly
-• It encrypts the nonce with the NT hash of the password (hash = encryption key)
+- The AS Request to get a TGT doesn’t actually use the password directly
+- It encrypts the nonce with the NT hash of the password (hash = encryption key)
 
-• So you can request a TGT with only the NT hash
+- So you can request a TGT with only the NT hash
 
-• Called “over-pass-the-hash”
+- Called “over-pass-the-hash”
 
-• “Natively” with ktutil
-• With Impacket (of course)
+- “Natively” with ktutil
+- With Impacket (of course)
 
-• Scenario: need TGT for ROPNOP\tgwynn
+- Scenario: need TGT for ROPNOP\tgwynn
 
-• NT hash: 1a59bd44fe5bec5a39c44c8cd3524dee
+- NT hash: 1a59bd44fe5bec5a39c44c8cd3524dee
 
 * https://blog.ropnop.com/practical-usage-of-ntlm-hashes/
 
 85
 
-Over Pass the Hash - ktutil
-• We can add the NT hash as an arcfour-hmac-md5 encryption key to a 
+Over Pass the Hash - ktutil
+- We can add the NT hash as an arcfour-hmac-md5 encryption key to a 
 keytab file, and use it to request a TGT
 
 ktutil -k ~/mykeys add -p tgwynn@LAB.ROPNOP.COM -e arcfour-hmac-md5 -w 
@@ -977,63 +956,63 @@ All credit to passing-the-hash and his blog here: http://passing-the-hash.blogsp
 
 86
 
-Over Pass the Hash - Impacket
-• ./getTGT does this for you
+Over Pass the Hash - Impacket
+- ./getTGT does this for you
 
 ./getTGT -hashes :1a59bd44fe5bec5a39c44c8cd3524dee lab.ropnop.com/wmyers
 
 87
 
-Over Pass the Hash - AES
-• Using NT hashes with arcfour encryption could flag some Windows alerts
-• “Encryption downgrade” - it’s not the default encryption anymore (and a great IOC!)
+Over Pass the Hash - AES
+- Using NT hashes with arcfour encryption could flag some Windows alerts
+- “Encryption downgrade” - it’s not the default encryption anymore (and a great IOC!)
 
-• Modern AD uses AES256 encryption
+- Modern AD uses AES256 encryption
 
-• AES keys can be extracted with Mimikatz or Secretsdump (with elevated privs)
+- AES keys can be extracted with Mimikatz or Secretsdump (with elevated privs)
 
 88
 
-Over Pass the Hash - with AES
+Over Pass the Hash - with AES
 
 89
 
-Over Pass the Hash - with AES
+Over Pass the Hash - with AES
 
 Kekeo and Rubeus can do this from Windows also!
 
 90
 
-Kerberos Persistence
+Kerberos Persistence
 
 Silver and Golden Tickets
 
 91
 
-Forging Kerberos Tickets
-• Golden and Silver tickets are pretty well documented
+Forging Kerberos Tickets
+- Golden and Silver tickets are pretty well documented
 
-• Want to focus more on their practical usage
-• Didn’t see a lot of resources about using Golden Tickets from non-Windows
+- Want to focus more on their practical usage
+- Didn’t see a lot of resources about using Golden Tickets from non-Windows
 
-• Using Mimikatz or Impacket, we can forge TGTs or TGSs
+- Using Mimikatz or Impacket, we can forge TGTs or TGSs
 
-• Golden Ticket
+- Golden Ticket
 
-• Silver Ticket
+- Silver Ticket
 
-• Forging a TGT (and the included PAC)
-• Requires the krbtgt key - the “master” encryption key from the KDC (Domain Controller)
-• Can be used to request any TGS from the Domain Controller
+- Forging a TGT (and the included PAC)
+- Requires the krbtgt key - the “master” encryption key from the KDC (Domain Controller)
+- Can be used to request any TGS from the Domain Controller
 
-• Forging a TGS (and included PAC)
-• Requires the machine account password (key) from the KDC
-• Can be used to directly access any service (w/o touching DC)
+- Forging a TGS (and included PAC)
+- Requires the machine account password (key) from the KDC
+- Can be used to directly access any service (w/o touching DC)
 
 92
 
-Golden Ticket Creation
-• With the krbtgt key and domain SID, can use Impacket’s ticketer.py to 
+Golden Ticket Creation
+- With the krbtgt key and domain SID, can use Impacket’s ticketer.py to 
 create a Golden Ticket:
 
 ./ticketer.py -aesKey
@@ -1042,31 +1021,31 @@ create a Golden Ticket:
 911344-3269124959 -domain lab.ropnop.com -duration <days> -
 groups <RIDs> <USERNAME>
 
-• Default duration is 10 years (but that’s suspicious)
-• Can also specify additional groups (default is all the admin groups)
-• Username can be any valid domain user (or even made up!)
+- Default duration is 10 years (but that’s suspicious)
+- Can also specify additional groups (default is all the admin groups)
+- Username can be any valid domain user (or even made up!)
 
 93
 
-Golden Ticket Creation
+Golden Ticket Creation
 
 94
 
-Golden Ticket Usage
+Golden Ticket Usage
 
 95
 
-Silver Ticket Creation
-• Useful for persistence to a single host/service combo
+Silver Ticket Creation
+- Useful for persistence to a single host/service combo
 
-• Stealthier than Golden Tickets - you never need to actually contact the DC
+- Stealthier than Golden Tickets - you never need to actually contact the DC
 
-• Need the machine accounts Kerberos key
+- Need the machine accounts Kerberos key
 
-• Machine accounts usually end in $
-• Must specify the service you need
-• e.g. cifs/ws03win10.lab.ropnop.com
-• For code execution, you usually need CIFS and/or HOST
+- Machine accounts usually end in $
+- Must specify the service you need
+- e.g. cifs/ws03win10.lab.ropnop.com
+- For code execution, you usually need CIFS and/or HOST
 
 ./ticketer.py -nthash a02450646974012c437618d1b39fff13 -domain-sid S-1-5-
 
@@ -1078,54 +1057,54 @@ Explanation of silver tickets and useful services: https://adsecurity.org/?p=201
 
 96
 
-Silver Ticket Creation
+Silver Ticket Creation
 
 ws03win10 machine account key (not krbtgt)
 
 97
 
-Silver Ticket Usage
+Silver Ticket Usage
 
 98
 
-In Summary
-• There is SO much attack surface in Active Directory Environments
-• You don’t need to use Windows to “talk Windows”
+In Summary
+- There is SO much attack surface in Active Directory Environments
+- You don’t need to use Windows to “talk Windows”
 
-• DNS
-• LDAP
-• Kerberos
-• MS-RPC
+- DNS
+- LDAP
+- Kerberos
+- MS-RPC
 
-• More tools and techniques will make you a better pentester
+- More tools and techniques will make you a better pentester
 
-• Go exploring and find some cool things!
+- Go exploring and find some cool things!
 
-• Amazing research being done and released right now with Kerberos
+- Amazing research being done and released right now with Kerberos
 
-• Impacket is awesome
+- Impacket is awesome
 
 99
 
-Shoulders of Giants
-• Huge shoutouts to the titans in this area:
+Shoulders of Giants
+- Huge shoutouts to the titans in this area:
 
-• @gentilkiwi
-• @mysmartlogon
-• @passingthehash
-• @agsolino
-• @PyroTek3
-• @TimMedin
-• @harmj0y
-• @tifkin_
-• @_dirkjan
-• @elad_shamir
+- @gentilkiwi
+- @mysmartlogon
+- @passingthehash
+- @agsolino
+- @PyroTek3
+- @TimMedin
+- @harmj0y
+- @tifkin_
+- @_dirkjan
+- @elad_shamir
 
-• …and countless more
+- …and countless more
 
 100
 
-Questions?
+Questions?
 
 @ropnop
 
@@ -1141,4 +1120,4 @@ msrpc-in-ad-environments
 
 101
 
-
+

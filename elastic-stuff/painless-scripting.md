@@ -1,5 +1,10 @@
 # Painless scripting examples. 
-Note These were ran on 7.10 Version
+Note These were ran on 7.10 Version; if there's any diff between later versions
+but whatever. 
+
+Also note, when possible you should handle such modifications at ingest time.
+This might not always be possible; for example if you're tagging data tied
+to malicious IP addresses that you've learned about after the fact. 
 
 ## Split a string field 
 ```

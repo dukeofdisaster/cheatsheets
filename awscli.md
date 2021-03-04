@@ -11,3 +11,7 @@
 - make a bucket with a given name
 
 ```aws s3 cp /tmp/dude.txt s3://mybuckethere```
+- copy file into the target bucket (i.e. like a dir)
+
+```aws s3 ls s3://dudewheresmycar```
+- list files in the s3 bucket "dudewheresmycar"

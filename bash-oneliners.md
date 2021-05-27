@@ -92,3 +92,8 @@ figure out about how much it's done; 1=100%
 du -b WinDev2009Eval.ova | awk -F " " '{print $1}' | while read i ; do echo $(($i / 1000000000)) | ruby -e 'puts ARGF.read.to_i / 20.0'; done
 ```
 - note it's not 100 percent accurate either
+
+## convert strings in a text file to lowercase
+```
+cat someuppercaselines.txt | tr '[:upper:]' '[:lower:]'
+```

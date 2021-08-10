@@ -53,3 +53,8 @@ dc=lab,dc=ropnop,dc=com "objectClass=groupPolicyContainer" displayName gPCFileSy
 ldapsearch -LLL -x -H ldap://pdc01.lab.ropnop.com -D "thoffman@lab.ropnop.com" -W -b 
 "dc=lab,dc=ropnop,dc=com" "servicePrincipalName=*" sAMAccountName servicePrincipalName
 ```
+
+Enumerate groups of a user
+```
+ldapsearch -xLLL -h some-domaincontroller01 -D currentuser@somecompany.com -w 'currentuserpassword' -b 'dc=somecompany,dc=COM' "(samaccountname=sometargetuser)" memberOf | grep -i memberof
+```

@@ -123,6 +123,11 @@ rooto@box:~/ cat 10-feeds.json | jq -r '.results[] | .indicators[] | .indicator'
 ```
 cat 5day.json | jq .results[] | jq .industries
 ```
+## extract items from array where a field is one of a given value
+
+```
+cat testdata/randgen-1000.json| jq '.results[]|.indicators[]|select([.type] |inside(["email","IPv4"]))'
+```
 
 ## Edit values in an existing file
 - Note this will require some copying because the file isn't modifed, the
@@ -138,36 +143,3 @@ rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
 rm /opt/some/config.json && mv /opt/some/tmp.json /opt/some/config.json
 ```
 
-## Selecting only keys; i.e. like python .keys()
-- good when trying to model large json objects
-```bash
-$ cat node-stats.json | jq keys
-[
-  "ephemeral_id",
-  "events",
-  "host",
-  "http_address",
-  "id",
-  "jvm",
-  "name",
-  "os",
-  "pipeline",
-  "pipelines",
-  "process",
-  "queue",
-  "reloads",
-  "snapshot",
-  "status",
-  "version"
-]
-```
-- to select keys of a nested object, just pipe to keys
-```bash
-$ cat node-stats.json | jq '.jvm | keys'
-[
-  "gc",
-  "mem",
-  "threads",
-  "uptime_in_millis"
-]
-```
